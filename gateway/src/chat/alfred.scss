@@ -1,0 +1,261 @@
+$color-main: #2e7083;
+$color-light: lighten( $color-main, 33% );
+$color-accent: #cd601e;
+$color-accent-light: lighten( #cd601e, 33% );
+$color-shadow: rgba( 163, 163, 163, 1 );
+$height-collapse: 1.95em;
+$height-alfred: 40vh;
+$width-alfred: 25vw;
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; 
+    display: table; 
+  }
+
+  &:after {
+    display: block;
+    clear: both;
+    height: 1px;
+    margin-top: -1px;
+    visibility: hidden;
+  }
+}
+
+.alfred {
+  background-color: white;
+  border: 1px solid $color-shadow;
+  bottom: 0em;
+  display: block;
+  height: $height-alfred;
+  position: fixed;
+  right: 2em;
+  width: $width-alfred;
+  z-index: 1000;
+
+  .al-header {
+    @include clearfix();
+    background-color: $color-main;
+    box-shadow: 0px 3px 3px 1px $color-shadow;
+    height: $height-collapse;
+    padding: 3px;
+    position: relative;
+    z-index: 100;
+    
+    .al-title {
+      color: white;
+      float: left;
+      margin-left: 5px;
+      text-shadow: 1px 1px 1px $color-shadow;
+    }
+
+    .al-collapse {
+      margin-right: 5px;
+      float: right;
+    }
+
+    .al-title:after,
+    .al-collapse:after {
+      clear: both;
+    }
+
+    .glyphicon-minus {
+      visibility: visible;
+      display: inline-block;
+    }
+    
+    .glyphicon-plus {
+      visibility: hidden;
+      display: none;
+    }
+  }
+
+  .al-body {
+    // @include clearfix();
+    $height-collapse-2: calc( #{$height-collapse} + #{$height-collapse} );
+
+    bottom: $height-collapse;
+    // display: flex;
+    // flex: 1;
+    // flex-direction: column;
+    overflow-y: scroll;
+    min-height: 0;
+    max-height: calc( #{$height-alfred} - #{$height-collapse-2} );
+    height: calc( #{$height-alfred} - #{$height-collapse-2} );
+    position: absolute;
+    width: 100%;
+    
+    > .al-messages {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      min-height: 100%;
+      min-width: 100%;
+      // overflow-y: scroll;
+      padding: 5px;
+      
+      .al-bubble {
+        background-color: $color-light;
+        border-color: $color-shadow;
+        border-radius: 5px 5px 0px 5px;
+        box-shadow: 2px 2px 5px 2px $color-shadow;
+        font-size: 1.5rem;
+        margin: 0.5em 0em 0em auto;
+        padding: 5px;
+        text-align: right;
+        width: fit-content;
+        max-width: 80%;
+        
+        .al-timestamp,
+        .al-message {
+          white-space: pre-wrap;
+          margin: 0em;
+        }
+
+        .al-timestamp {
+          border-top: 1px solid $color-shadow;
+          color: darken( $color-shadow, 17.5% );
+          font-size: 0.8em;
+        }
+    
+        &.bot {
+          border-radius: 5px 5px 5px 0px;
+          background-color: $color-accent-light;
+          margin: 0.5em auto 0em 0em;
+          text-align: left;
+        }
+
+      }
+
+      .al-typing {
+        @include clearfix();
+
+        margin: 0 0 0 auto;
+        padding: 5px 0px 0px 5px;
+        width: fit-content;
+        
+        &.al-bot {
+          margin: 0 auto 0 0;
+        }
+
+        .al-dot {
+          $duration: 1500ms;
+
+          animation-name: bounce;
+          animation-duration: $duration;
+          animation-iteration-count: infinite;
+          display: inline-block;
+          font-weight: bolder;
+          font-size: 2em;
+
+          &:nth-child( 1 ) {
+            animation-delay: 0s;
+          }
+
+          &:nth-child( 2 ) {
+            animation-delay: calc( #{$duration} * 0.333 );
+          }
+
+          &:nth-child( 3 ) {
+            animation-delay: calc( #{$duration} * 0.666 );
+          }
+        }
+      }
+    }
+
+    // IE workarounds
+    // TODO: FIXME: Overflow is visible when viewed using IE11.
+    // https://stackoverflow.com/questions/49095440/width-fit-content-working-on-chrome-but-not-explorer
+    &.al-body-ie {
+      display: flex;
+      
+      > .al-messages {
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        height: 100%;
+        width: 100%;
+        
+        .al-bubble {
+          @include clearfix();
+          width: fit-content;
+          height: fit-content;
+          overflow: visible;
+          max-width: 80%;
+          float: right;
+        }
+      }
+    }
+  }
+
+  .al-footer {
+    @include clearfix();
+    border-top: 1px solid $color-shadow;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    .al-in {
+      border  : none;
+      height: $height-collapse;
+      outline: none;
+      padding: 0px 3px 0px 3px;
+      width: calc( 100% - 36px );
+      float: left;
+    }
+  
+    .al-send {
+      background-color: white;
+      color: $color-main;
+      height: $height-collapse;
+      max-height: $height-collapse;
+      min-height: $height-collapse;
+      max-width: 36px;
+      outline: none;
+      float: right;
+    }
+  }
+
+
+  &.closed {
+    background-color: $color-main;
+    border-radius: 50%;
+    height: $height-collapse;
+    min-height: $height-collapse;
+    max-height: $height-collapse;
+    max-width: calc( #{$width-alfred} * 0.66 );
+    
+    &:hover {
+      background-color: $color-light;
+    }
+
+    .al-header .glyphicon-minus,
+    .al-body,
+    .al-footer {
+      visibility: hidden;
+      display: none;
+    }
+    
+    .al-header .glyphicon-plus {
+      visibility: visible;
+      display: inline-block;
+    }
+  }
+
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY( 0 );
+  }
+  25% {
+    transform: translateY( -0.4em );
+  }
+  50% {
+    transform: translateY( 0 );
+  }
+  75% {
+    transform: translateY( 0 );
+  }
+}

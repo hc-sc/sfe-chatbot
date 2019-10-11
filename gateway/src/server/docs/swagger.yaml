@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  title: Service Gateway
+  description: Health Canada Services Gateway
+  version: 3.0.0
+
+host: servicegateway-passerelledeservice.hc-sc.gc.ca
+basePath: /api
+schemes:
+  - http
+  - https
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#   OBJECT DEFINITIONS
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+definitions:
+
+  userId:
+    properties:
+      userId:
+        type: string
+        example: e-1m5g6z081k7r4j8w9q1f3u4i9q
+
+  searchMatchEntry:
+    properties:
+      indices:
+        type: array
+        items:
+          type: integer
+          minItems: 2
+          maxItems: 2
+          example: 
+            - 0
+            - 4
+      value:
+        type: string
+        example: myKey
+      key: 
+        type: string
+        example: en.title
+      arrayIndex:
+        type: integer
+        example: 0
+
+  gatewaySearchResultI18nContent:
+    properties:
+        content:
+          type: string
+          example: This is the content for myKey
+        description:
+          type: string
+          example: This is the myKey description
+        keywords: 
+          type: string
+          example: myKey,authentication
+        title:
+          type: string
+          example: myKey
+
+  gatewaySearchResult:
+    properties:
+      id: 
+        type: string
+        example: 11-0
+      url: 
+        type: string
+        example: a-mykey.html
+      en:
+        $ref: '#/definitions/gatewaySearchResultI18nContent'
+      fr:
+        $ref: '#/definitions/gatewaySearchResultI18nContent'
+      score: 
+        type: float
+        example: 0.00005000000000000004
+      matches:
+        type: array
+        items:
+          $ref: '#/definitions/searchMatchEntry'
+
+  gatewaySearchResults:
+    properties:
+      results:
+          type: array
+          items:
+            $ref: '#/definitions/gatewaySearchResult'
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#   PATHS
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+paths:
+  /alfred/users/new:
+    get:
+      summary: Returns a newly generated and unique user ID
+      produces: 
+        - application/json
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/userId'
+  /search/gateway/{query}:
+    get:
+      summary: Search route for services gateway that takes a simple string query
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: query
+          required: true
+          type: string
+          description: Search query
+      responses:
+        200:
+          schema:
+            $ref: '#/definitions/gatewaySearchResults'
+  /search/software/{query}:
+    get:
+      summary: Search route for pre-approved software that takes a simple string query
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: query
+          required: true
+          type: string
+          description: Search query
+      responses:
+        200:
+          schema:
+            # TODO: Replace with software search results
+            $ref: '#/definitions/gatewaySearchResults'
+            

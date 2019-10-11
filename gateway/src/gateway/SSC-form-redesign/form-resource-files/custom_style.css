@@ -1,0 +1,26 @@
+.text-small-green {
+	  margin-top: 15px;
+  margin-bottom: 15px; 
+   margin-left: 400px;
+   font-size: 11px;
+   color: #288711;}
+   
+.text-small-red {
+	margin-top: 15px;
+  margin-bottom: 15px; 
+  width: 800px;
+   font-size: 14px;
+   color: #F90B3D;}
+.text-long-red {
+	margin-top: 15px;
+  margin-bottom: 15px; 
+  width: 800px;
+   font-size: 14px;
+   color: #F90B3D;}
+ .pre_text {
+ font-family: Arial;	 
+ font-size: 14px;
+ word-wrap:break-word;
+  overflow: auto;
+ }
+   

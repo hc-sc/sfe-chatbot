@@ -1,0 +1,42 @@
+version: '3.4'
+services:
+  base:
+    image: alfred-base
+    container_name: alfred-base
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+  actions:
+    depends_on:
+    - base
+    container_name: alfred-actions
+    network_mode: "host"
+    ports:
+    - "5055:5055"
+    build:
+      dockerfile: ./actions/Dockerfile
+      context: ./
+  core:
+    depends_on:
+    - base
+    - actions
+    container_name: alfred-core
+    network_mode: "host"
+    ports:
+    - "5005:5005"
+    build:
+      dockerfile: ./core/Dockerfile
+      context: ./
+  gateway:
+    depends_on:
+    - base
+    - actions
+    - core
+    container_name: servicegateway
+    network_mode: "host"
+    ports:
+    - "3000:3000"
+    build:
+      # dockerfile: ./Dockerfile.dev
+      dockerfile: ./Dockerfile
+      context: ./gateway

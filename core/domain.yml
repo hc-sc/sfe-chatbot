@@ -1,0 +1,84 @@
+intents:
+- gw_search_query:
+    use_entities: []
+- greet
+- goodbye
+- thanks
+- acronym_translation
+- person_lookup
+- cat_fact
+
+entities:
+- acronym
+- person
+- gw_search_query
+
+slots:
+  acronym:
+    type: unfeaturized
+    auto_fill: false
+  person:
+    type: unfeaturized
+    auto_fill: false
+  gw_search_query:
+    type: unfeaturized
+    auto_fill: false
+
+actions:
+- utter_acronym_translation
+- utter_thanks
+- utter_greet
+- utter_goodbye
+- utter_acronym
+- action_acronym
+- action_person_lookup
+- utter_search_results_none
+- action_cat_fact
+- utter_cat_fact_pre
+- form_gateway_search
+- utter_error_generic
+
+templates:  
+  utter_greet:
+  - text: "Hi, my name is Alfred the Health Canada Service Gateway Bot. I can help translate acronyms, search the Service Gateway and tell you what all those confusing acronyms stand for."
+  - text: "Hello, Alfred here. You can ask me to look up things on the Service Gateway, find people or tell you what acronyms mean. Go ahead, ask me something."
+  - text: "Hi I'm alfred, ask me something. I know all about the Service Gateway, acronyms and how to contact the people who work here."
+
+  utter_acronym_translation:
+  - text: "Would you like me translate an acronym for you?"
+  - text: "Is there an acronym you need translated?"
+
+  utter_acronym:
+  - text: "What acronym would you like me translate for you?"
+  - text: "What is the acronym you need translated?"
+  - text: "May I have the name of the acronym you need translated?"
+
+  utter_request_search_term:
+  - text: "What would you like to search for?"
+
+  utter_search_results_none:
+  - text: "Hmm, I couldn't seem to find anything on the gateway related to \"{gw_search_query}\"."
+  - text: "Sorry, I can't find anything for \"{gw_search_query}\"."
+  - text: "\"{gw_search_query}\" returned no results, try something else."
+
+  utter_goodbye:
+  - text: "Bye!"
+  - text: "Farewell"
+  - text: "Talk to you later."
+  
+  utter_thanks:
+  - text: "My pleasure."
+  - text: "You are welcome."
+  - text: "No problem."
+
+  utter_cat_fact_pre:
+  - text: "One cat fact coming right up:"
+  - text: "Thanks you for subscribing to Health Canada cat facts:"
+  - text: "Incoming cat fact:"
+  - text: "Sure, have a cat fact:"
+
+  utter_error_generic:
+  - text: "Sorry, I encountered an error. Please let my developer know."
+
+  forms:
+    - form_gateway_search

@@ -1,0 +1,11 @@
+apps:
+  - script: 'make'
+    args: 'core-server'
+    cwd: './'
+    name: 'alfred_core'
+    exec_mode: 'fork'
+  - script: 'make'
+    args: 'action-server'
+    cwd: './'
+    name: 'alfred_action_server'
+    exec_mode: 'fork'
