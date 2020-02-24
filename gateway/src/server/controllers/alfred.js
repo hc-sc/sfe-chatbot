@@ -9,7 +9,8 @@ import proxy from "http-proxy-middleware";
 const app = new Router();
 
 const alfredProxy = proxy( {
-  target: 'http://localhost:5005',
+  target: 'http://sfe-chatbot-core:5005',
+  ws: true,
   changeOrigin: true,
   pathRewrite: {
     '^/api/alfred': ''

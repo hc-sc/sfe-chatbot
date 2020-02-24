@@ -3,6 +3,14 @@ import io from 'socket.io-client';
 import { format } from "date-fns";
 
 /**
+ * @method Array.prototype.sample
+ * @description Returns pseudorandom array element
+ */
+Array.prototype.sample = function sample() {
+  return this[ Math.floor( Math.random() * this.length ) ];
+};
+
+/**
  * @function delay
  * @description Delays async execution for a given duration
  * @param {number} timeout Timeout duration (ms)(default: 1000)
@@ -24,6 +32,14 @@ class Alfred {
   constructor( lang = "en" ) {
     // TODO: Bilingual
     this.lang = lang;
+
+    /**
+     * @prop {bool} awaitingResponse
+     * @description Flag used to check if chat is awaiting response from bot.  
+     * true === waiting  
+     * false === not waiting
+     */
+    this.awaitingResponse = false;
 
     try {
       this.isIE = wb
@@ -165,6 +181,199 @@ class Alfred {
   }
 
   /**
+   * @prop {Object} demo
+   * @description Alfred demo object, contains demo methods and config
+   */
+  demo = {
+
+    /**
+     * @prop {method} demo.start
+     * @description Starts the demo
+     */
+    start: async () => {
+      console.info( "Starting live alfred demo!" );
+
+      // Loop through demo steps (alfred.demo.steps)
+      await delay( 1500 );
+
+      for ( const step of this.demo.steps  ) {
+        await step();
+        this.$submitBtn.click();
+
+        // If the bot is taking a while to respond, wait some more
+        do {
+          await delay( 3500 );
+        } while ( this.awaitingResponse );
+      }
+    },
+
+    writeMessage: async message => {
+      for ( const char of message ) {
+        this.$input.val( `${ $(".al-in").val() }${ char }` );
+        await delay( Math.floor( Math.random() * ( 150 - 75 ) + 74 ) );
+      }
+    },
+
+    /**
+     * @prop {method[]} demo.steps
+     * @description Array of demonstration steps (methods)
+     */
+    steps: [
+      
+      // Step 1, hello
+      async () => {
+        const message = [
+          "Hello Alfred",
+          "Hi",
+          "Hello",
+          "Greetings",
+          "Hey",
+        ].sample();
+
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 2, acronym
+      async () => {
+        const
+          acronym = [
+            "PMRA",
+            "ATIP",
+            "CSB",
+            "PIRT",
+          ].sample(),
+          message = [
+            `What is ${ acronym }?`,
+            `Do you know what ${ acronym } stands for?`,
+            `What does ${ acronym } mean?`,
+            `Tell me what ${ acronym } is please.`,
+          ].sample();
+
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 2, acronym - misspelled
+      async () => {
+        const
+          acronym = [
+            "PMAR",,
+            "PRIT",
+          ].sample(),
+          message = [
+            `What is ${ acronym }?`,
+            `Do you know what ${ acronym } stands for?`,
+            `What does ${ acronym } mean?`,
+            `Tell me what ${ acronym } is please.`,
+          ].sample();
+
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 3, look somebody up
+      async () => {
+        const
+          person = [
+            "Paul Coyte",
+            "Gerry Moysey",
+            "Justin Trudeau",
+            "Andrew Scheer",
+          ].sample(),
+          message = [
+            `Who is ${ person }?`,
+            `Lookup ${ person }`,
+            `Do you know who ${ person } is?`,
+            `Please tell me about ${ person }.`,
+          ].sample();
+
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 3.1, thanks
+      async () => {
+        const message = [
+          "Thanks",
+          "Thank you",
+          "ty",
+          "Thx :)",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 4, search the gateway
+      async () => {
+        const message = [
+          "Search for printers",
+          "Tell me where to find security information",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+
+      // Step 4.1, thanks
+      async () => {
+        const message = [
+          "Thanks",
+          "Thank you",
+          "ty",
+          "Thx :)",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Step 5, CAT FACTS
+      async () => {
+        const message = [
+          "I would like to subscribe to Health Canada cat facts.",
+          "May I purr-suade you for a cat fact?",
+          "I can has cat fact?",
+          "Cat fact pls",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+
+      // Step 5.1, thanks
+      async () => {
+        const message = [
+          "Purrfect, ty",
+          "Thank you - that's pawesome",
+          "Meow-nificent, thanks",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+
+      // Step 5.2, bye
+      async () => {
+        const message = [
+          "Bye!",
+          "See you",
+          "Later",
+        ].sample();
+        await this.demo.writeMessage( message );
+        return;
+      },
+      
+      // Last Step, reset chat
+      async () => {
+        await delay( 2000 );
+        localStorage.clear();
+        $(".al-bubble").remove();
+        await delay( 1000 );
+        this.demo.start();
+      },
+
+    ]
+
+  }
+
+  /**
    * @function handleUserTyping
    * @description Start user typing animation with debounce
    */
@@ -248,7 +457,7 @@ class Alfred {
 
     // If no userId cached, generate one from API call
     if ( !userId ) {
-      const response = await ( await fetch( `/api/alfred/users/new` ) ).json() || null;
+      const response = await ( await fetch( `../api/alfred/users/new` ) ).json() || null;
       userId = response.userId;
       
       // If userId still not set throw error, otherwise cache generated userId in browser storage
@@ -276,7 +485,7 @@ class Alfred {
     
     try {
       // TODO: Handle debug URLS - consider constants data file.
-      const conversationHistory = await fetch( `/api/alfred/conversations/${ userId }/tracker`, {
+      const conversationHistory = await fetch( `../api/alfred/conversations/${ userId }/tracker`, {
         method: 'GET',
         mode: 'cors',
       } );
@@ -304,9 +513,12 @@ class Alfred {
     // TODO: Show typing animation whilst awaiting response, hide before showing bot response
     this.startBotTyping();
 
+    // Update awaitingResponse flag to waiting
+    this.awaitingResponse = true;
+
     try {
       // TODO: Handle debug URLS - consider constants data file.
-      response = await ( await fetch( '/api/alfred/webhooks/rest/webhook', {
+      response = await ( await fetch( '../api/alfred/webhooks/rest/webhook', {
         method: 'POST',
         mode: "cors",
         headers: {
@@ -323,7 +535,10 @@ class Alfred {
       response = false;
     }
     
-    console.log( response );
+    // Update awaitingResponse flag to not waiting
+    this.awaitingResponse = false;
+
+    // console.log( response );
 
     const endTime = window.performance.now();
 
@@ -375,7 +590,7 @@ class Alfred {
       for ( const btn of buttons ) {
         switch( btn.type ) {
           case "web_url":
-            this.appendChatMessage( `<a href="${ btn.url }" target="_blank">${ btn.title }</a>`, true );
+            this.appendChatMessage( `<a href="${ btn.url }">${ btn.title }</a>`, true );
             break;
           default:
             // TODO: on btn click, invoke this.ask( btn.title )
@@ -438,7 +653,6 @@ class Alfred {
    * @description Function attempts to scroll to bottom of given container
    * @param {$} $container, defaults to message container
    */
-  // scrollToBottom = ( $container = this.$messageWrapper ) => {
   scrollToBottom = ( $container = this.$body ) => {
     $container.animate( {
       scrollTop: $container[ 0 ].scrollHeight - $container[ 0 ].clientHeight
@@ -455,7 +669,7 @@ const main = async () => {
   // TODO: Initialize loader, load on click ?
   try {
     // Check alfred connection before initializing
-    const { is_ready } = await ( await fetch( "/api/alfred/status" ) ).json();
+    const { is_ready } = await ( await fetch( "../api/alfred/status" ) ).json();
 
     if ( !is_ready ) {
       throw new Error( "Unable to reach alfred service." )
@@ -469,6 +683,11 @@ const main = async () => {
   // Initialize chatbot
   const chat = new Alfred();
   await chat.init();
+
+  // DEMO - uncomment to enable
+  // if ( !chat.isOpen ) chat.toggle();
+  // chat.demo.start();
+
 
   // TODO: Halt loader - bot enabled
 

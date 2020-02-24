@@ -9,7 +9,7 @@ import proxy from "http-proxy-middleware";
 const app = new Router();
 
 const mmProxy = proxy( {
-  target: 'http://localhost:8065',
+  target: 'http://sfe-chatbot-mattermost:8065',
   changeOrigin: true,
 } );
 

@@ -33,7 +33,7 @@ const getOutages = async () => {
   const 
     requestTime = Date.now(),
     // FIXME: Cross origin issue with data hosted on GCPedia, figure out deployment solution. Might just fix itself if it can be hosted on Jamie's dev server.
-    // const rawOutages = await ( await fetch( "https://localhost:3000/gw-custom/get-outages.php" ) ).text();
+    // const rawOutages = await ( await fetch( "https://sfe-chatbot-gateway:3000/gw-custom/get-outages.php" ) ).text();
     rawOutages = await ( await fetch( "http://sc-dev.hc-sc.gc.ca:90/gw-custom/get-outages.php" ) ).text();
 
   // TODO: Send back JSON, XML ?, CSV ?

@@ -3,7 +3,7 @@ import path from 'path';
 import Http from 'http';
 import express from 'express';
 import morgan from 'morgan';
-import rfs from 'rotating-file-stream';
+import { createStream } from 'rotating-file-stream';
 import helmet from "helmet";
 import swaggerUI from 'swagger-ui-express';
 import YAML from 'yamljs';
@@ -81,7 +81,7 @@ if ( !( 'parents' in module ) || !module.parents.length ) {
   console.log('\n\n************ STARTING PROD SERVER ************\n\n');
 
   // Initialize logging
-  const stream = rfs( 'gateway.log', {
+  const stream = createStream( 'gateway.log', {
     compress: true,
     interval: '7d', // Rotate log files weekly
     path: path.join( __dirname, 'logs' ),
