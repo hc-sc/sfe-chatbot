@@ -1,6 +1,6 @@
 import re, json
-from rasa_core_sdk import Tracker
-from rasa_core_sdk.forms import FormAction
+from rasa_sdk import Tracker
+from rasa_sdk.forms import FormAction
 import requests
 import urllib.parse
 
@@ -30,10 +30,11 @@ class FormGatewaySearch(FormAction):
     }
 
   def submit(self, dispatcher, tracker, domain):
-    searchTerm = tracker.get_slot( "gw_search_query" )
+    # searchTerm = tracker.get_slot( "gw_search_query" )
+    searchTerm = next( tracker.get_latest_entity_values( "gw_search_query" ), None )
     query = re.sub( r'[^\w\s]', r'', searchTerm )
     query = re.sub( r'[.,\/#!$%\^&\*;:{}=\-_`~()]', r'', searchTerm )
-    response = requests.get( "http://localhost:3000/api/search/gateway/" + urllib.parse.quote( query ) )
+    response = requests.get( "http://sfe-chatbot-gateway:3000/api/search/gateway/" + urllib.parse.quote( query ) )
     results = json.loads( response.content )
 
     # print( json.dumps( results, indent=4, sort_keys=True ) )

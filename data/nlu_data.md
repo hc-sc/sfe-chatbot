@@ -74,7 +74,7 @@
 - alright
 
 ## lookup:acronym
-- tables/acronyms.csv
+- ./tables/acronyms.csv
 
 ## intent:acronym_translation
 - Tell me what the acronym [CAF](acronym) means
@@ -102,19 +102,13 @@
 - Yes please tell me what [YPN](acronym) stands for
 - Do you know what [ATIP](acronym) stands for
 
-## intent:gw_search_query
-- I want to search the gateway
-- Can you help me find some information
-- Help me find something on the service gateway please
-- Search the gateway
-- Search the service gateway
+## intent:gateway_search
 - Find information about [WebEx](gw_search_query)
 - Search for [account setup](gw_search_query)
 - Search for [keyboard](gw_search_query)
 - Search the gateway for [keyboard](gw_search_query)
 - Can you search for new [account creation](gw_search_query)
 - Search for [hardware](gw_search_query) information
-- Do you know how to [delete an account](gw_search_query)
 - Can you do a search for [fax machines](gw_search_query)
 - Tell me where to find [security](gw_search_query) information
 - Please tell me how to set up my [printer](gw_search_query)
@@ -122,22 +116,27 @@
 - What do you know about [open government coordination](gw_search_query)
 
 ## lookup:person
-- tables/geds.csv
+- ./tables/geds.csv
 
 ## intent:person_lookup
+- Does [Sylvie Plouffe](person) work here
 - How do I contact [Gerry Moysey](person)
-- Can you find [Kimberly Shirley](person) contact information
+- Can you find [Kimberly Shirley](person)s contact information
+- Lookup [David Sabourin](person)s info
 - Who is [Alex Benay](person)
+- Who is [Shunfu Sha](person)
 - Lookup [Paul Coyte](person) for me
 - Please tell me about [John Smith](person)
 - Can you find [Christine Toll](person)
+- Tell me who [Sarah Kennedy](person) is
 
 ## intent:cat_fact
-- cat
-- Do you know anything about cats
 - Cat fact
 - I want a cat fact
 - I want to know about cats
 - Tell me a cat fact
-- Tell me something about cats
+- Tell me something interesting about cats
 - Alfred do you know any cat facts
+- Subscribe to Health Canada cat facts
+- Do you know any cat facts
+- Do you like cats

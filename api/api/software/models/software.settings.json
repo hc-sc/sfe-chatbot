@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "software-catelog-items",
+  "info": {
+    "name": "SoftwareCatalogItem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "acronym": {
+      "type": "string"
+    },
+    "application": {
+      "type": "string"
+    },
+    "businessAppType": {
+      "type": "string"
+    },
+    "compatibility": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string"
+    },
+    "exceptionContact": {
+      "type": "email"
+    },
+    "shortName": {
+      "type": "string"
+    },
+    "vendor": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "slsa_primary_en": {
+      "type": "string"
+    },
+    "slsa_primary_fr": {
+      "type": "string"
+    },
+    "slsa_others_en": {
+      "type": "string"
+    },
+    "slsa_others_fr": {
+      "type": "string"
+    },
+    "context_en": {
+      "type": "string"
+    },
+    "context_fr": {
+      "type": "string"
+    },
+    "legacy_id": {
+      "type": "integer"
+    },
+    "cost": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "restricted": {
+      "type": "boolean"
+    },
+    "standard": {
+      "type": "boolean"
+    }
+  }
+}

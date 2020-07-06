@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/security",
+      "handler": "security.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/security",
+      "handler": "security.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/security",
+      "handler": "security.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

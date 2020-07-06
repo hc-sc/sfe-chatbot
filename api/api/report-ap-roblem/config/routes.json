@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/report-ap-roblem",
+      "handler": "report-ap-roblem.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/report-ap-roblem",
+      "handler": "report-ap-roblem.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/report-ap-roblem",
+      "handler": "report-ap-roblem.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

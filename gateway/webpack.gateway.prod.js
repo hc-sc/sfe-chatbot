@@ -10,8 +10,6 @@ const gatewayProdConfig = merge.strategy({
   entry: 'replace',
   mode: 'replace',
   devtool: 'replace',
-  // 'module.rules': 'replace',
-  // optimization: 'replace',
 })( common, {
 
   mode: 'production',
@@ -29,20 +27,6 @@ const gatewayProdConfig = merge.strategy({
     // Chatbot
     alfred: [
       './src/chat/alfred',
-    ],
-
-    // Gateway search
-    'search/gateway/global': [
-      'url-search-params-polyfill',
-      './src/search/gateway/search-ui.global',
-    ],
-    'search/gateway/ui': [
-      './src/search/gateway/search-ui',
-    ],
-
-    // Software search
-    'search/software/ui': [
-      './src/search/software/search-ui',
     ],
   },
 

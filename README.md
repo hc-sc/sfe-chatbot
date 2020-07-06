@@ -1,13 +1,19 @@
 # Alfred
 
+![Alfred Mascot](./docs/img/alfred.png)
+
 ## Health Canada Service Gateway Chatbot Prototype
 
 This project is a chatbot, based on the rasa stack, meant to serve as a prototype application.
 
+### Running
+
+See: [Makefile](./Makefile)
+
 ### TODO
 
 - Write readme
-- Upgrade to Rasa 1.0
-- Modify `./gateway` to be submodule pointing to gateway repository
 - Tests
 - Jenkins pipeline
+- Submodule initialization
+  - sync gateway and search repositories

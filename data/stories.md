@@ -15,15 +15,12 @@
  - utter_goodbye
 
 ## story_5
-* gw_search_query
- - form_gateway_search
- - form { "name": "form_gateway_search" }
- - form { "name": "null" }
-
+* gateway_search
+ - action_gateway_search
 
 ## story_6
 * person_lookup
- - action_person_lookup
+ - action_person_lookup 
 
 ## story_7
 * cat_fact

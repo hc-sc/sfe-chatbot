@@ -1,7 +1,10 @@
-""" import re, json
-from rasa_core_sdk import Action
+import re, json
+# from rasa_core_sdk import Action
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from typing import Any, Text, Dict, List
 import requests
-import urllib.parse """
+import urllib.parse
 
 """
   @ActionGatewaySearch
@@ -10,11 +13,11 @@ import urllib.parse """
 
   REQUIRES NODEJS V10+
 """
-""" class ActionGatewaySearch(Action):
-  def name(self):
+class ActionGatewaySearch(Action):
+  def name(self) -> Text:
     return "action_gateway_search"
 
-  def run(self, dispatcher, tracker, domain):
+  def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
     if not tracker.latest_message['entities']:
       # no acronym was found in the latest user intent
       dispatcher.utter_message("I couldn't find a search term in '" + tracker.latest_message["text"] + "'. I'm am still a work in progress :)")
@@ -26,9 +29,8 @@ import urllib.parse """
     searchTerm = tracker.latest_message['entities'][0]['value']
     query = re.sub( r'[^\w\s]', '', searchTerm )
 
-    response = requests.get( "http://localhost:3000/api/search/gateway/" + urllib.parse.quote( query ) )
-    
-    # TODO: Check response headers, handle bad request
+    # TODO: Currently uses search api from old gateway - transition to new?
+    response = requests.get( "http://sfe-chatbot-gateway:3000/api/search/gateway/" + urllib.parse.quote( query ) )
 
     # Parse JSON response
     results = json.loads( response.content )
@@ -39,7 +41,7 @@ import urllib.parse """
       print( json.dumps( results, indent=2 ) )
       return []
 
-    print( json.dumps( results, indent=4, sort_keys=True ) )
+    # print( json.dumps( results, indent=4, sort_keys=True ) )
 
     resultsCount = len( results["results"] )
 
@@ -55,13 +57,14 @@ import urllib.parse """
 
       # TODO: Respond with top 2 results and offer link to full results page.
       for result in results["results"]:
-        btn = { "type": "web_url", "title": result["en"]["title"], "url": result["url"] }
+        btn = { "type": "web_url", "title": result["title"], "url": result["url"] }
         buttons.append( btn )
         resultsCount += 1
         if resultsCount >= maxResults:
           break
       
-      dispatcher.utter_button_message( response, buttons )
+      # FIXME: Button response broken from 0.X-1.X migration
+      dispatcher.utter_button_message( response, buttons=button )
       
       return []
     else:
@@ -69,4 +72,4 @@ import urllib.parse """
       
       dispatcher.utter_template( "utter_search_results_none", gw_search_query = query )
 
-      return [] """
+      return []

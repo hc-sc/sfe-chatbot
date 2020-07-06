@@ -26,7 +26,7 @@ class AcronymTableGenerator( threading.Thread ):
     with open(acronymPath, 'r') as csvFile:
       acronymCols = [ 'EN' ] # TODO: Use args for french!!
       
-      acronyms = pd.read_csv(csvFile, encoding="UTF-8", usecols=acronymCols)
+      acronyms = pd.read_csv(csvFile, encoding="utf8", usecols=acronymCols)
       
       acronyms.to_csv(
         getRelativePath( "../data/tables/acronyms.csv" ),
@@ -55,7 +55,7 @@ class GEDSTableGenerator( threading.Thread ):
     with open(gedsPath, 'r') as csvFile:
       gedsCols = [ 'Surname', 'GivenName' ]
 
-      people = pd.read_csv(csvFile, encoding="UTF-8", usecols=gedsCols)
+      people = pd.read_csv(csvFile, encoding="utf-8", usecols=gedsCols)
       
       # Concatonate full names and remove old columns
       people[ "FullName" ] = people.GivenName + ' ' + people.Surname

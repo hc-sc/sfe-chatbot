@@ -1,2 +1,0 @@
-language: "en_trf_bertbaseuncased_lg"
-pipeline: spacy_sklearn

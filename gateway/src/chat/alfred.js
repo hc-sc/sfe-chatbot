@@ -151,18 +151,18 @@ class Alfred {
 
     // Initialize Socket.IO
     // this.socket = io( "http://localhost:3000/api/alfred/socket.io/" );
-    this.socket = io( "/api/alfred/socket.io/" );
-    const self = this;
+    // this.socket = io( "/api/alfred/socket.io/" );
+    // const self = this;
 
-    this.socket.on( 'connection', socket => {
-      console.log( "DEBUG: SOCKET", socket );
+    // this.socket.on( 'connection', socket => {
+    //   console.log( "DEBUG: SOCKET", socket );
 
-      self.socket.emit( 'session_request', { session_id: self.userId }, data => {
-        console.log( 'DEBUG: SESSION REQUEST', data );
-      } );
-    } );
+    //   self.socket.emit( 'session_request', { session_id: self.userId }, data => {
+    //     console.log( 'DEBUG: SESSION REQUEST', data );
+    //   } );
+    // } );
 
-    window.socket = this.socket;
+    // window.socket = this.socket;
 
     // Enable UI events
 
@@ -548,6 +548,8 @@ class Alfred {
     // Stop typing animation
     this.stopTyping();
 
+    console.log( response );
+
     return response;
   }
 
@@ -669,9 +671,9 @@ const main = async () => {
   // TODO: Initialize loader, load on click ?
   try {
     // Check alfred connection before initializing
-    const { is_ready } = await ( await fetch( "../api/alfred/status" ) ).json();
+    const is_ready = await ( await fetch( "../api/alfred" ) ).text();
 
-    if ( !is_ready ) {
+    if ( /Hello from Rasa: \n\n?\.\n\n?\.\n\n?/ig.test( is_ready ) ) {
       throw new Error( "Unable to reach alfred service." )
     }
   }

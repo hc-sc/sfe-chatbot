@@ -1,0 +1,394 @@
+@charset "utf-8";
+
+html, body, main.gw-container-splash {
+	height: 100%;
+	margin: 0;
+}
+
+body {font-family: "Noto Sans",Lato,Arial,Verdana,sans-serif !important;}
+body.gw-bkg {
+	background-image: url(../assets/gw-bkg.png) ;
+	background-repeat: no-repeat;
+	background-position: top left;
+	/*  -webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;*/
+	height: 100%;
+}
+
+.gw-pdng-lft-0 {
+	padding-left: 0px;
+}
+.gw-pdng-rght-0 {
+	padding-right: 0px;
+}
+
+/* =========== styles related to layout grid - START =========== */
+
+.gw-full-width {
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	right: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	}
+
+.gw-container {
+	font-family: "Noto Sans",Lato,Arial,Verdana,sans-serif !important;
+	background: #fff;
+}
+
+.gw-container h1 {
+	margin: 40px 0px 20px !important;
+}
+
+.gw-container .btn-primary:hover {
+	background-color: #be5819 !important;
+}
+
+.gw-container .btn-primary {
+	background-color: #2e7083!important;
+	margin: 15px 0px 15px 0px;
+}
+
+.gw-container h2 {
+	border-bottom: none !important;
+}
+
+.gw-container .alert ul {
+	margin-left: 0px !important;
+}
+.gw-container .alert ul li {
+	border-top: 2px dotted #ccc;
+	padding: 7px 0px 5px 0px;
+}
+.gw-container .alert ul li:first-child {
+	border-top: 0px;
+}
+
+/* =========== styles related to home banner - START =========== */
+.gw-home-banner {
+	background-image: url(../assets/gw-banner.jpg) !important;
+/*	background-size: 100% auto;*/
+	background-repeat: no-repeat;
+	background-position: top left;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding: 0 1em 1em 1em;
+	border-bottom: 10px solid #cd601e;
+	min-height: 160px;
+}
+
+.gw-innerbox {
+	background-color: #2e7083;
+    color: #fff;
+    padding: 20px 20px 20px 15px;
+	margin-top: -5em;
+}
+
+.gw-banner-tagline-1 {
+	font-family: Lato, Arial, Verdana, sans-serif !important;
+	font-size: 26px;
+	color: #fff;
+	margin: 0px;
+	text-shadow: 1px 1px 1px #333;
+}
+
+.gw-banner-tagline-2 {
+	font-family: Lato, Arial, Verdana, sans-serif !important;
+	font-size: 15px !important;
+	color: #fff;
+	margin: 0px;
+	text-shadow: 1px 1px 1px #333;
+}
+h1.gw-home-heading {
+	font-family: Lato, Arial, Verdana, sans-serif !important;
+	font-size: 26px !important;
+	color: #fff!important;
+	margin: 0px!important;
+	text-shadow: 1px 1px 1px #333!important;
+	font-weight: 300;
+	line-height: 1.0;
+	border-bottom: none !important;
+	padding-bottom: 5px !important;
+}
+
+/* =========== styles related to home banner - END =========== */
+
+/* =========== styles related to sitemenu - START =========== */
+
+/*.gw-list-sitemenu .gw-li-single::before  {
+   			content: "\25BA\a0";
+			color: #2e7083;
+		}*/
+		
+.gw-sitemenu .gw-li-multi:hover  {
+	background-color: transparent !important;
+	color: #333 !important;
+}
+
+.gw-sitemenu .gw-li-multi::before  {
+	content: "\25BC\a0"!important;
+	color: #2e7083;
+}
+
+.gw-sitemenu .gw-li-multi, .gw-sitemenu .gw-li-single  {
+	border-top: 1px dotted #e8e6e6;
+}
+/* =========== styles related to sitemenu - END =========== */
+
+/* =========== styles related to splash page - START =========== */
+
+.gw-container-splash {
+	background-color: transparent !important;
+
+}	
+
+.gw-container-splash h1 {
+	margin: 10px 0px 20px !important;
+}
+
+.gw-banner-splash {
+	background-image: url(../assets/gw-banner.jpg) !important;
+	background-repeat: no-repeat;
+	background-position: top left;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 240px;
+	padding-bottom: 5em;
+}
+
+.gw-splash-out-box {
+	background-image: url(../assets/gw-splash-inner-bkg.png) !important;
+	background-repeat: no-repeat !important;
+	background-position: top center!important;
+	padding: 20px 20px 20px 15px;
+	margin-top: -6em !important;
+	padding-bottom: 5em;
+	margin-bottom: -2px;
+	/*background-color: : #f9f9f9;*/
+	height: 100% !important;	
+}
+
+.gw-splash-inner {
+	background-color: #f9f9f9;; 
+	border: 1px solid #ddebef;
+	border-radius: 6px;
+	margin-top: 1em;
+	box-shadow: 2px 2px 4px grey;
+	}
+
+/*  =========== styles related to splash page - END =========== */
+
+/* =========== styles related to cards links - START =========== */
+.gw-cards .btn {
+	padding: 10px;
+	background-color: #fff;
+	border-top: 34px solid #e7f1f3;}
+
+.gw-cards .btn:hover {
+	background-color: #e7f1f3;
+	border-top: 34px solid #cd601e;
+	color: #000 !important;
+}
+.gw-cards img {
+	margin-top: -2.4em;
+	border: 6px solid #fff!important;}
+.gw-cards .btn:hover img {
+	margin-top: -2.4em;
+	border: 6px solid #e7f1f3!important;}
+
+/* =========== styles related to cards links - END =========== */
+
+/* =========== styles related to content page banner - START =========== */
+.gw-banner {
+	height: 120px;
+	background-image: url(../assets/gw-banner.jpg) !important;
+/*	background-size: 100% auto;*/
+	background-repeat: no-repeat;
+	background-position: top left;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.gw-banner .gw-logo {
+	width: auto !important;
+}
+
+.gw-banner-menu {
+	background-color: #2e7083 !important;
+/*	background: -webkit-gradient(linear,left top,left bottom,from(#2e7083),to(#0f5164)) !important;*/
+}
+
+.gw-banner-menu .wb-navcurr {
+	background-color: #0f5164 !important;
+	color: #fff !important;
+}
+
+.gw-banner-menu .wb-navcurr:hover {
+	background-color: #999 !important;
+}
+
+#mb-pnl.modal-content {
+    background: #0f5164;
+}
+
+#mb-pnl .modal-header, .overlay-def header {
+	background: #2e7083;
+}
+
+#mb-pnl .lng-ofr, #mb-pnl .sm-pnl, #mb-pnl .srch-pnl {
+    background: #0f5164;
+    color: #fff;
+}
+
+#mb-pnl .modal-footer {
+    background: #033c4c;
+}
+
+#mb-pnl .info-pnl {
+    border-top: 2px solid #000;
+	background: #033c4c;
+}
+
+.btn-primary {
+	background-color: #2e7083!important;
+}
+
+.gw-home-banner .form-control, .gw-home-banner .btn {
+	min-height: 34px;
+}
+
+.gw-home-navbar {
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
+
+.gw-home-navbar .navbar-form {
+	margin-left: -15px;
+}
+
+.navbar-header a {
+	text-decoration: none;
+}
+
+.navbar-brand {
+	padding: 14px 15px;
+	line-height: 23px;
+	height: 36px;
+}
+
+.navbar-right a {
+	padding: 15px;
+	display: inline-block;}
+
+.gw-icon-md {font-size: 22px}
+
+.wb-menu .menu > li.gw-bnr-home {
+	background-color: #cd601e;
+}
+
+.wb-menu .menu > li .gw-icon-md {
+	display: block;
+}
+
+#wb-srch.gw-search {text-align: left !important;} /* ======== styles related to search box - required for IE - START ======= */
+
+/* =========== styles related to home banner - END =========== */
+
+
+.gw-list-group {
+	margin-left: 0px !important;
+}
+
+.gw-list-group .list-group-item-heading {
+	padding: 6px;
+	border-left: 6px dotted #a1c2c8;
+	color: #4C4C4C !important;
+}
+
+.gw-list-group .list-group-item {
+	background-color: #fff;
+	border: 1px dotted #e1e1e8;
+	border-left: 6px solid #e5f0f4;
+	font-weight: normal;
+	text-decoration: none !important;
+	padding: 3px 6px;
+}
+
+.gw-list-group .list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.gw-list-group .list-group-item:last-child {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.gw-list-group .list-group-item a {
+	text-decoration: none !important;
+}
+
+.gw-list-group .list-group-item:hover {
+	border-left-color: #cd601e;
+}
+
+/* =========== Styles related to gw list groups - END =========== */
+
+/* =========== Styles for misc ======== - START */
+.gw-heading-icon {display: inline-block !important;}
+.gw-table .dl-horizontal dt, .gw-table .dl-horizontal dd {
+	padding: 3px 3px 3px 0
+}
+
+.gw-table details summary {
+	border: 0px !important;
+}
+
+.gw-table details {
+	border: 0px !important;
+	padding-left: 0px !important;
+}
+
+/* ====== Overide wet Middle screen overlay ======= */
+.gw-wb-popup-mid {
+    max-height: 60%;
+    max-width: 60%;
+}
+.gw-wb-popup-mid-sm {
+    max-height: 30%;
+    max-width: 40%;
+}
+
+.gw-hide header {
+	display: none !important;
+}
+/* =========== Styles for misc ======== - END */
+
+/* =========== Styles for different viewports ======== - START */
+	
+	@media screen and (min-width:768px) and (max-width:991px) {
+		#wb-info h3 {
+			white-space: normal !important;
+		}
+		.gw-wb-popup-mid {
+			max-height: 70%;
+			max-width: 70%;
+		}
+		.gw-wb-popup-mid-sm {
+			max-height: 60%;
+			max-width: 50%;
+		}
+	}
+		
+/* =========== Styles for different viewports ======== - END */
+

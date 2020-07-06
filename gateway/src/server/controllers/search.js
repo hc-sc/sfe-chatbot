@@ -4,8 +4,8 @@
  */
 
 import { Router } from "express";
-import GWSearch from '../../search/gateway';
-import SGSearch from '../../search/software';
+import GWSearch from './gwsearch/GatewaySearch/src/module.js';
+import SGSearch from './gwsearch/SoftwareSearch/src/module.js';
 
 const app = new Router();
 
@@ -22,7 +22,6 @@ const searchGatewayController = ( req, res ) => {
 
   try {
     const { query } = req.params;
-
     results = searchTool.search( query );
   }
   catch(err) {
@@ -48,14 +47,17 @@ app.get( '/api/search/gateway/:query', searchGatewayController );
  * @todo TODO: Include parameters for custom search options
  */
 const searchSoftwareController = ( req, res ) => {
-  let searchTool = new SGSearch( /* TODO: Lang, custom options */ );
-  let status = 200;
-  let results = [ ];
+  let
+    searchTool = new SGSearch( /* TODO: Lang, custom options */ ),
+    status = 200,
+    results = [ ];
 
   try {
-    const { query } = req.params;
+    const
+      { query = "" } = req.params,
+      { lang = "en" } = req.query;
 
-    results = searchTool.search( query );
+    results = searchTool.search( query, lang );
   }
   catch(err) {
     status = 500;
@@ -66,9 +68,7 @@ const searchSoftwareController = ( req, res ) => {
 
   res
     .status( status )
-    .send({ 
-      results,
-    });
+    .send({ results });
 };
 
 app.get( '/api/search/software/:query', searchSoftwareController );

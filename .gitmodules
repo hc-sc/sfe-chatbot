@@ -1,0 +1,6 @@
+[submodule "gateway/src/gateway"]
+	path = gateway/src/gateway
+	url = http://git.itsm-tools.hc-sc.gc.ca/hc-sc/gateway2.git
+[submodule "gateway/src/server/controllers/gwsearch"]
+	path = gateway/src/server/controllers/gwsearch
+	url = git@itsm-tools.hc-sc.gc.ca:hc-sc/gateway.git

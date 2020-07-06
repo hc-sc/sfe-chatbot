@@ -1,0 +1,52 @@
+{
+  "collectionName": "components_page_components_sub_pages",
+  "info": {
+    "name": "Sub Page",
+    "icon": "angle-right"
+  },
+  "options": {},
+  "attributes": {
+    "header_en": {
+      "type": "string",
+      "required": true
+    },
+    "header_fr": {
+      "type": "string",
+      "required": true
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    },
+    "description_en": {
+      "type": "string"
+    },
+    "description_fr": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "regex": "[a-z0-9_-]{1,30}",
+      "unique": false
+    },
+    "sorting_category": {
+      "type": "enumeration",
+      "enum": [
+        "New",
+        "Support",
+        "Transfer",
+        "None"
+      ],
+      "default": "None",
+      "required": true
+    },
+    "notes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "softwarehome-components.note"
+    }
+  }
+}

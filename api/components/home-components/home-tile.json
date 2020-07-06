@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_home_components_home_tiles",
+  "info": {
+    "name": "HomeTile",
+    "icon": "ad"
+  },
+  "options": {},
+  "attributes": {
+    "header_en": {
+      "type": "string"
+    },
+    "description_en": {
+      "type": "text"
+    },
+    "path": {
+      "type": "string"
+    },
+    "icon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "description_fr": {
+      "type": "text"
+    }
+  }
+}

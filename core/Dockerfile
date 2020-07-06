@@ -1,6 +1,15 @@
-FROM alfred-base
+FROM sfe/chatbot-base:1.0.0 as models
 
-# Set working directory
+WORKDIR /usr/src/alfred/
+
+COPY Makefile .
+COPY ./models ./models/
+
+
+# -----------------------------
+
+FROM models as core
+
 WORKDIR /usr/src/alfred/
 
 # Copy requirements manifest and makefile
@@ -8,7 +17,6 @@ COPY Makefile ./
 
 # Copy bot
 COPY ./core ./core/
-COPY ./models ./models/
 
 # Expose ports
 EXPOSE 5005

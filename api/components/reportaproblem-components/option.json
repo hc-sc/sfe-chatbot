@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_reportaproblem_components_options",
+  "info": {
+    "name": "option",
+    "icon": "bug"
+  },
+  "options": {},
+  "attributes": {
+    "text_en": {
+      "type": "string"
+    },
+    "text_fr": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "option",
+        "other"
+      ],
+      "default": "option",
+      "required": true
+    }
+  }
+}

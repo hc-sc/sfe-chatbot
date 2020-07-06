@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/reported-problems",
+      "handler": "reported-problem.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reported-problems/count",
+      "handler": "reported-problem.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/reported-problems/:id",
+      "handler": "reported-problem.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/reported-problems",
+      "handler": "reported-problem.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/reported-problems/:id",
+      "handler": "reported-problem.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/reported-problems/:id",
+      "handler": "reported-problem.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

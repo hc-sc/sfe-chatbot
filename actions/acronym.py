@@ -1,5 +1,8 @@
 import re
-from rasa_core_sdk import Action
+# from rasa_core_sdk import Action
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from typing import Any, Text, Dict, List
 import pandas as pd
 from fuzzywuzzy import fuzz, process
 from .helpers import getRelativePath
@@ -23,17 +26,13 @@ def findCloseAcronymMatch(acronyms, entity, lang='EN', max_results=3):
   Rasa action class for handling acronym searching
 """
 class ActionAcronym(Action):
-  def name(self):
+  def name(self) -> Text:
     return "action_acronym"
 
-  def run(self, dispatcher, tracker, domain):
+  def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    ent = next( tracker.get_latest_entity_values( "acronym" ), None )
 
-    # print("\n\n")
-    # print("DEBUG:\n")
-    # print(tracker.latest_message)
-    # print("\n\n")
-
-    if not tracker.latest_message['entities']:
+    if not ent:
       # no acronym was found in the latest user intent
       dispatcher.utter_message("I couldn't find an acronym in '" + tracker.latest_message["text"] + "'. I'm am still a work in progress :)")
 
@@ -43,9 +42,6 @@ class ActionAcronym(Action):
       # TODO: Log query with no identifiable acronym
       
       return[]
-
-    ## Get entity from latest message, convert to uppercase and 
-    ent = re.sub( r'[^\w\s]', '', tracker.latest_message['entities'][0]['value'].upper() )
 
     # print("\n\nENTITY: " + ent + "\n\n")
 
@@ -59,12 +55,13 @@ class ActionAcronym(Action):
       found = False
 
       for _, acronym in acronyms.iterrows():
-        if acronym[0].upper() == ent:
-          found = acronym[1]
+        if acronym[0].lower() == ent.lower():
+          found = acronym
           break
 
-      if not found:
-        # TODO: Perform a fuzzy match with fuzzywuzzy if there are no direct matches, give top 2-4 options to user
+      if not ( type(found) == pd.core.series.Series ):
+        # Perform a fuzzy match with fuzzywuzzy if there are no direct matches, give top 2-4 options to user
+        # TODO: present to user as options to follow up with
         closeMatches = findCloseAcronymMatch( acronyms, ent )
 
         if not closeMatches:
@@ -82,8 +79,9 @@ class ActionAcronym(Action):
 
         # TODO: Log queries that don't match and review to improve nlp model
       else:
-        dispatcher.utter_message("The acronym '" + ent + "' stands for '" + found + "'.")
+        dispatcher.utter_message("The acronym '" + found[ 0 ] + "' stands for '" + found[ 1 ] + "'.")
       
       csvFile.close()
 
     return []
+    

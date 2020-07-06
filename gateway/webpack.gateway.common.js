@@ -13,10 +13,7 @@ const
  */
 const chunkOrder = [
   "polyfill",
-  "search/gateway/global",
   "alfred",
-  "search/gateway/ui",
-  "search/software/ui",
 ];
 
 /**
@@ -31,23 +28,8 @@ const generateHTMLPlugins = ( pages = [
   // Map list into plugin instances
   pages.map( template => new HTMLWebpackPlugin( {
     template,
+    hash: true, // enable cache busting
     filename: template.replace( /\.\/src\/?/i, "../../" ),
-
-    // Exclude search UI entries from all HTML except search pages
-    excludeAssets: [
-
-      // Gateway Search UI module
-      .../(?:gateway.search.results)/ig.test( template )
-        ? [ ]
-        : [ /gateway.ui/i ],
-
-      // Software Search UI module
-      .../(?:s.get)/ig.test( template )
-        ? [ ]
-        : [ /software.ui/i ],
-
-    ]
-    /*   .filter( truthy => !!truthy ) */,
 
     // Sort chunks according to "chunkOrder"
     chunksSortMode: ( chunk1, chunk2 ) => {
@@ -72,7 +54,7 @@ const gatewayConfig = {
 
   mode: 'development',
 
-  devtool: '#source-map',
+  devtool: '#inline-source-map',
 
   entry: {
 
@@ -93,20 +75,6 @@ const gatewayConfig = {
     alfred: [
       './src/chat/alfred',
       './src/chat/alfred.dev',
-    ],
-
-    // Gateway search
-    'search/gateway/global': [
-      'url-search-params-polyfill',
-      './src/search/gateway/search-ui.global',
-    ],
-    'search/gateway/ui': [
-      './src/search/gateway/search-ui',
-    ],
-
-    // Software search
-    'search/software/ui': [
-      './src/search/software/search-ui',
     ],
   },
 

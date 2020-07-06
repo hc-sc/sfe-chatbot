@@ -1,8 +1,29 @@
-from rasa_core_sdk import Action
+# from rasa_core_sdk import Action
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from typing import Any, Text, Dict, List
 import pandas as pd
 import re
+import requests
+import json
+import os
+from benedict import benedict
 
 from .helpers import getRelativePath
+
+"""
+  @appendOrgTree
+
+  Recursively parse through employee org structure, returning a concatenated string of it's entirety
+"""
+def appendOrgTree( result, orgString="" ):
+  result = benedict( result )
+  orgString = result[ 'organizationInformation' ][ 'organization' ][ 'description' ][ 'en' ] + ", " + orgString
+
+  if [ 'organizationInformation', 'organization', 'organizationInformation' ] in result: #organizationInformation.organization
+    return appendOrgTree( result=result[ 'organizationInformation' ][ 'organization' ], orgString=orgString )
+  else:
+    return orgString
 
 """
   @ActionPersonLookup
@@ -10,123 +31,64 @@ from .helpers import getRelativePath
   Rasa action class for handling person lookup
 """
 class ActionPersonLookup(Action):
-  def name(self):
+  def name(self) -> Text:
     return "action_person_lookup"
 
-
-  def run(self, dispatcher, tracker, domain):
+  def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
     print( "DEBUG: ENTERED PERSON LOOKUP ACTION HANDLER" )
-    person = tracker.get_slot( "person" )
+    person = next( tracker.get_latest_entity_values( "person" ), None )
 
     # if not tracker.latest_message['entities']:
     if not person:
+      print( "Couldn't find person in GEDS lookup intent:" )
+      print( person )
+
       # no acronym was found in the latest user intent
-      dispatcher.utter_message("I couldn't find a person in '" + tracker.latest_message["text"] + "'. I'm am still a work in progress :)")
-      # TODO: Log failed intent
+      dispatcher.utter_message("I couldn't find a person in '" + tracker.latest_message["text"] + "'.")
+      # TODO: Log failed intent      
       
       return []
-    
-    # GEDS data path
-    csvPath = getRelativePath( "../data/gedsOpenData.csv" )
 
     ## Get entity from latest message
     person = re.sub( r'[^\w\s]', '', person )
-    # person = re.sub( r'[^\w\s]', '', tracker.latest_message['entities'][0]['value'] )
-    # firstName = ""
-    # lastName = ""
 
-    # try:
-    #   firstName = person.split()[0].upper()
-    #   lastName = person.split()[1].upper()
-    # except:
-    #   print("")
+    ## Format name for GEDS API: "{last}, {first}"
+    # FIXME: GEDS API needs format "{last}, {first}" as opposed to "{first} {last}" provided by current entity extraction method
+    # Currently formatting below, however being able to extract First and Last names separately may be ideal?
+    namePattern = re.search( '(\w*)\s(\w*)', person, flags=re.IGNORECASE )
+    formattedSearchName = ( namePattern.group( 2 ) + ", " + namePattern.group( 1 ) ).lower()
 
-    """
-      Read GEDS CSV and search for matching entry.
+    gedsQueryURI = "https://geds-sage-ssc-spc-apicast-production.api.canada.ca/gapi/v2/employees?searchValue=" + formattedSearchName + "&searchField=0&searchCriterion=2&searchScope=sub&&searchFilter=2&maxEntries=10&returnOrganizationInformation=yes"
+    gedsQueryHeaders = {
+      u'Accept': 'application/json',
+      u'user-key': os.environ[ 'GEDS_API_KEY' ]
+    }
 
-      TODO: Operation is slow: improve efficiency
+    gedsQueryURI = requests.utils.requote_uri( gedsQueryURI ) 
 
-      CVS Columns:
-        Surname,
-        GivenName,
-        Initials,
-        Prefix (EN),
-        Prefix (FR),
-        Suffix (EN),
-        Suffix (FR),
-        Title (EN),
-        Title (FR),
-        Telephone Number,
-        Fax Number,
-        TDD Number,
-        Secure Telephone Number,
-        Secure Fax Number,
-        Alternate Telephone Number,
-        Email,
-        Street Address (EN),
-        Street Address (FR),
-        Country (EN),
-        Country (FR),
-        Province (EN),
-        Province (FR),
-        City (EN),
-        City (FR),
-        Postal Code,
-        PO Box (EN),
-        PO Box (FR),
-        Mailstop,
-        Building (EN),
-        Building (FR),
-        Floor,
-        Room,
-        Administrative Assistant,
-        Administrative Assistant Telephone Number,
-        Executive Assistant,
-        Executive Assistant Telephone Number,
-        Department Acronym,
-        Department Name (EN),
-        Department Name (FR),
-        Organization Acronym,
-        Organization Name (EN),
-        Organization Name (FR),
-        Organization Structure (EN),
-        Organization Structure (FR)
-    """      
-    with open(csvPath, 'r') as csvFile:
-      gedsCols = ['Surname', 'GivenName', 'Prefix (EN)', 'Title (EN)', 'Telephone Number', 'Department Name (EN)', 'Organization Name (EN)']
-      # chunkSize = 10 ** 4
-      found = False
-      pronoun = "They are"
-      # matchCount = False
+    print( "Attempting GEDS query;" )
+    print( gedsQueryURI )
 
-      # TODO: https://stackoverflow.com/questions/653509/breaking-out-of-nested-loops
-      # for people in pd.read_csv(csvFile, encoding="UTF-8", usecols=gedsCols, low_memory=False, chunksize=chunkSize):
-      people = pd.read_csv(csvFile, encoding="UTF-8", usecols=gedsCols)
-      # search for matching entry 
-      for _, employee in people.iterrows():
-        if employee[1].upper() == person.split()[0].upper() and employee[0].upper() == person.split()[1].upper():
-          found = str(employee[3]) + " at " + str(employee[5]) + ", " + str(employee[6]) + ". Telephone number " + str(employee[4]) + "."
-          prefix = str(employee[2])
-          
-          if prefix.lower() == "dr":
-            person = "Doctor " + person
+    response = requests.get( gedsQueryURI, headers=gedsQueryHeaders )
 
-          elif prefix.lower() == "mr":
-            pronoun = "He is"
+    if response.status_code == 204:
+      # No entries found
+      dispatcher.utter_message( "Sorry I couldn't find \"" + person + "(" + formattedSearchName + ")\" in the Government Electronic Directory. -- " + gedsQueryURI )
+    elif response.status_code >= 400:
+      # Problem with request
+      dispatcher.utter_message( "Sorry I had some trouble reaching the Government Electronic Directory. Please try again later." )
+    else:
+      # Found a match!
+      result = json.loads( response.content )[ 0 ]
 
-          elif "s" in prefix.lower():
-            pronoun = "She is"
+      # FIXME: Not curently checking for multiple results.
+      # TODO: If multiple results, give user top 3-5 and send request directly to geds?
 
-          break
+      # TODO: log and explore response object
 
-      #   #TODO: multiple
-      if not found:
-        # TODO: Perform a fuzzy match with fuzzywuzzy if there are no direct matches, give top 2-4 options to user
-        # TODO: Log queries that don't match and review to improve nlp model
-        dispatcher.utter_message( "Sorry I couldn't find \"" + person + "\" in GEDS." )
-      else:
-        dispatcher.utter_message( "I know " + person + ". " + pronoun + " " + found )
-      
-      csvFile.close()
+      organization = appendOrgTree( result=result ) if ("organizationInformation" in result ) else "(organization information currently unavailable)"
+      foundMessage = "I know " + person + ": " + str( result[ 'title' ][ 'en' ] ) + " at " + organization + ". Telephone number " + str( result[ 'contactInformation' ][ 'phoneNumber' ] ) + "."
+
+      dispatcher.utter_message( foundMessage )
     
     return []

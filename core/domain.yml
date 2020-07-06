@@ -1,12 +1,11 @@
 intents:
-- gw_search_query:
-    use_entities: []
 - greet
 - goodbye
 - thanks
 - acronym_translation
 - person_lookup
 - cat_fact
+- gateway_search
 
 entities:
 - acronym
@@ -15,13 +14,13 @@ entities:
 
 slots:
   acronym:
-    type: unfeaturized
+    type: text
     auto_fill: false
   person:
-    type: unfeaturized
+    type: text
     auto_fill: false
   gw_search_query:
-    type: unfeaturized
+    type: text
     auto_fill: false
 
 actions:
@@ -32,13 +31,14 @@ actions:
 - utter_acronym
 - action_acronym
 - action_person_lookup
+- action_gateway_search
 - utter_search_results_none
 - action_cat_fact
 - utter_cat_fact_pre
 - form_gateway_search
 - utter_error_generic
 
-templates:  
+responses:  
   utter_greet:
   - text: "Hi, my name is Alfred the Health Canada Service Gateway Bot. I can help translate acronyms, search the Service Gateway and tell you what all those confusing acronyms stand for."
   - text: "Hello, Alfred here. You can ask me to look up things on the Service Gateway, find people or tell you what acronyms mean. Go ahead, ask me something."
@@ -53,13 +53,9 @@ templates:
   - text: "What is the acronym you need translated?"
   - text: "May I have the name of the acronym you need translated?"
 
-  utter_request_search_term:
-  - text: "What would you like to search for?"
-
   utter_search_results_none:
   - text: "Hmm, I couldn't seem to find anything on the gateway related to \"{gw_search_query}\"."
   - text: "Sorry, I can't find anything for \"{gw_search_query}\"."
-  - text: "\"{gw_search_query}\" returned no results, try something else."
 
   utter_goodbye:
   - text: "Bye!"
@@ -70,6 +66,7 @@ templates:
   - text: "My pleasure."
   - text: "You are welcome."
   - text: "No problem."
+  - text: "Any time - I'm always here."
 
   utter_cat_fact_pre:
   - text: "One cat fact coming right up:"
@@ -78,7 +75,8 @@ templates:
   - text: "Sure, have a cat fact:"
 
   utter_error_generic:
-  - text: "Sorry, I encountered an error. Please let my developer know."
+  - text: "Sorry, I couldn't understand that. Please try again :)"
 
-  forms:
-    - form_gateway_search
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

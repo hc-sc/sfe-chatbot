@@ -15,5 +15,10 @@ _*.sh
 
 models/*
 data/tables/*
+data/acronyms.csv
+data/gedsOpenData.csv
+dialog_graph.html
 
 !**/.gitkeep
+
+.env

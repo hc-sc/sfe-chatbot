@@ -31,8 +31,7 @@ COPY ./webpack.server.common.js .
 COPY ./babel.config.js .
 
 # Build app and remove source
-RUN npm run build:prod
-RUN rm -rf /home/app/src
+RUN npm run build
 
 ###
 # Run
@@ -44,10 +43,6 @@ WORKDIR /home/app
 
 RUN mkdir /home/app/build/logs
 RUN chown -Rv node /home/app/build/logs
-
-# Set and export port value
-ENV PORT=3000
-EXPOSE 3000
 
 # Change from root to node
 USER node

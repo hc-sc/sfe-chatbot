@@ -26,7 +26,7 @@ import urllib.parse """
     # Get entity from latest message
     query = re.sub( r'[^\w\s]', '', tracker.latest_message['entities'][0]['value'] )
 
-    response = requests.get( "http://localhost:3000/api/search/software/" + urllib.parse.quote( query ) )
+    response = requests.get( "http://sfe-chatbot-gateway:3000/api/search/software/" + urllib.parse.quote( query ) )
     
     # TODO: Check response headers, handle bad request
 

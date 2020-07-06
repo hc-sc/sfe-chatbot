@@ -10,8 +10,7 @@ import alfredController from './alfred';
 import gatewayController from './static';
 import searchController from './search';
 import outagesController from './outages';
-import cipherController from './cipher';
-import authController from './auth';
+// import authController from './auth';
 import mmController from './mattermost';
 
 const app = new Router();
@@ -22,8 +21,7 @@ app.use( [
   gatewayController,
   searchController,
   outagesController,
-  cipherController,
-  // authController,
+  // TODO: authController,
   mmController,
 ] );
 

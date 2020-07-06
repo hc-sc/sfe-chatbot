@@ -1,16 +1,12 @@
 # Create base image for alfred core and actions containers
-# Use latest rasa image as foundation
-FROM rasa/rasa:latest-full
-
-# Copy requirements manifest and makefile
-COPY requirements.tensorflow.txt ./requirements.txt
-COPY Makefile .
+# Use python 3.7 image as foundation
+FROM python:3.7
 
 # Install dependencies
-RUN pip3 install -r requirements.txt
+RUN pip3 install rasa fuzzywuzzy pandas python-benedict requests
 
 # Download spacy libs (TODO: comment out/skip if not using spacy)
-RUN make spacey-link
+# RUN make spacy-link
 
 COPY entrypoint.sh /usr/local/bin/
 

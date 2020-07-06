@@ -2,8 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import config from '../../webpack.server.common';
 import morgan from 'morgan';
-import rfs from 'rotating-file-stream';
 
+const rfs = require('rotating-file-stream');
 const devMiddleware = require("webpack-dev-middleware");
 const hotMiddleware = require("webpack-hot-middleware");
 
@@ -18,7 +18,7 @@ async function startDevServer() {
     compiler = webpack( config ),
 
     // Instantiate rotating dev log stream
-    stream = rfs( 'gateway-dev.log', {
+    stream = rfs.createStream( 'gateway-dev.log', {
       interval: '1d', // Rotate log files daily
       path: path.join( __dirname, 'dev-logs' ),
     } );

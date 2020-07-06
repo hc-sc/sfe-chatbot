@@ -1,42 +1,153 @@
 version: '3.4'
+
 services:
+
+  # 
+  # Base image for bot, shared python dependencies
+  # 
   base:
-    image: alfred-base
-    container_name: alfred-base
+    image: sfe/chatbot-base:1.0.0
+    container_name: sfe-chatbot-base
     build:
       dockerfile: ./Dockerfile
       context: ./
-  actions:
-    depends_on:
-    - base
-    container_name: alfred-actions
-    network_mode: "host"
+
+  # 
+  # Database image, MongoDB
+  # 
+  database:
+    image: mongo:latest
+    container_name: sfe-chatbot-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PW}
+      - MONGO_RASA=${MONGO_RASA}
+      - MONGO_RASA_PW=${MONGO_RASA_PW}
+      - MONGO_STRAPI=${MONGO_STRAPI}
+      - MONGO_STRAPI_PW=${MONGO_STRAPI_PW}
+    networks: 
+      - net-sfe-dev
     ports:
-    - "5055:5055"
+      - "27017:27017"
+    volumes: 
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+      - /data/db/chatbot/mongo:/data/db
+    restart: always
+
+  # 
+  # RASA Actions server image
+  # 
+  actions:
+    image: sfe/chatbot-actions:1.0.0
+    container_name: sfe-chatbot-actions
+    depends_on:
+      - base
+      - database
+    networks: 
+      - net-sfe-dev
+    environment:
+      GEDS_API_KEY: ${GEDS_API_KEY}
+    ports:
+      - "5055:5055"
     build:
       dockerfile: ./actions/Dockerfile
       context: ./
+    restart: always
+
+  # 
+  # RASA Core server image
+  # 
   core:
+    image: sfe/chatbot-core:1.0.0
+    container_name: sfe-chatbot-core
+    environment:
+      - MONGO_RASA=${MONGO_RASA}
+      - MONGO_RASA_PW=${MONGO_RASA_PW}
     depends_on:
-    - base
-    - actions
-    container_name: alfred-core
-    network_mode: "host"
+      - base
+      - actions
+      - database
+    networks: 
+      - net-sfe-dev
     ports:
-    - "5005:5005"
+      - "5005:5005"
     build:
       dockerfile: ./core/Dockerfile
       context: ./
+    restart: always
+
+  # 
+  # (Old) Service Gateway front-end image, NodeJS
+  # 
   gateway:
+    image: sfe/chatbot-gateway:1.0.0
+    container_name: sfe-chatbot-gateway
     depends_on:
-    - base
-    - actions
-    - core
-    container_name: servicegateway
-    network_mode: "host"
+      - base
+      - actions
+      - core
+    networks: 
+      - net-sfe-dev
     ports:
-    - "3000:3000"
+      - "3000:3000"
     build:
-      # dockerfile: ./Dockerfile.dev
       dockerfile: ./Dockerfile
       context: ./gateway
+    restart: always
+
+  # 
+  # Service Gateway front-end, ReactJS prototype
+  # 
+  gateway-react:
+    depends_on: 
+      - api
+      - base
+      - actions
+      - core
+    image: sfe/chatbot-gateway:2.0.0
+    container_name: sfe-chatbot-gateway-2
+    environment:
+      - PORT=9001 # Force create-react-app to serve on different port to live alongside original
+    ports:
+      - 9001:9001
+    networks:
+      - net-sfe-dev
+    build:
+      dockerfile: ./Dockerfile
+      context: ./gateway.react
+    volumes:
+      - ${SFE_CHATBOT_ROOT}/gateway.react:/app/:rw
+    restart: always
+    tty: true
+    stdin_open: true
+
+  # 
+  # Service Gateway back-end, strapi prototype
+  # 
+  api:
+    depends_on:
+      - database
+    image: sfe/chatbot-gateway-api:1.0.0
+    # image: strapi/strapi:latest
+    container_name: sfe-chatbot-gateway-api
+    environment:
+      - DATABASE_CLIENT=mongo
+      - DATABASE_HOST=database
+      - DATABASE_PORT=27017
+      - DATABASE_NAME=strapi
+      - DATABASE_USERNAME=${MONGO_STRAPI}
+      - DATABASE_PASSWORD=${MONGO_STRAPI_PW}
+    volumes:
+      - ${SFE_CHATBOT_ROOT}/api:/srv/app
+    ports:
+      - '1337:1337'
+    networks:
+      - net-sfe-dev
+    build:
+      dockerfile: ./Dockerfile
+      context: ./api
+    restart: always
+
+networks:
+  net-sfe-dev:
+    external: true

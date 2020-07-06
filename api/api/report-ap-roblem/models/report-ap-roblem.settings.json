@@ -1,0 +1,48 @@
+{
+  "kind": "singleType",
+  "collectionName": "report_ap_roblems",
+  "info": {
+    "name": "ReportAProblem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "description_en": {
+      "type": "string"
+    },
+    "description_fr": {
+      "type": "string"
+    },
+    "more_details_en": {
+      "type": "string"
+    },
+    "more_details_fr": {
+      "type": "string"
+    },
+    "option": {
+      "type": "component",
+      "repeatable": true,
+      "component": "reportaproblem-components.option"
+    },
+    "alert_immediate_assist_en": {
+      "type": "richtext"
+    },
+    "alert_immediate_assist_fr": {
+      "type": "richtext"
+    },
+    "instruction_en": {
+      "type": "string"
+    },
+    "instruction_fr": {
+      "type": "string"
+    }
+  }
+}

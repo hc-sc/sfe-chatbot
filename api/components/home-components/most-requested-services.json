@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_home_components_most_requested_services",
+  "info": {
+    "name": "MostRequestedServices",
+    "icon": "list"
+  },
+  "options": {},
+  "attributes": {
+    "name_en": {
+      "type": "string"
+    },
+    "name_fr": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  }
+}

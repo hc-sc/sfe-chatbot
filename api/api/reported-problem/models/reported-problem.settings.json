@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reported_problems",
+  "info": {
+    "name": "Reported-Problem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "problem": {
+      "type": "text",
+      "maxLength": 400,
+      "required": true
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": [
+        "English",
+        "French"
+      ]
+    },
+    "page": {
+      "type": "string"
+    }
+  }
+}
