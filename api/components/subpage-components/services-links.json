@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_subpage_components_services_links",
+  "info": {
+    "name": "services-links",
+    "icon": "atom"
+  },
+  "options": {},
+  "attributes": {
+    "sub_page": {
+      "model": "sub-page"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

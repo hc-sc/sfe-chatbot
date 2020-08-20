@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "home_pages",
+  "info": {
+    "name": "HomePages"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "description_en": {
+      "type": "string"
+    },
+    "description_fr": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    },
+    "page_assets": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "sub_pages": {
+      "collection": "sub-page"
+    },
+    "category_tiles": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home-components.category-tile"
+    },
+    "notes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.note"
+    },
+    "tab_groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.grouped-tabs"
+    }
+  }
+}

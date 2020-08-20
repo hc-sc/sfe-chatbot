@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/chatbot",
+      "handler": "chatbot.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/chatbot",
+      "handler": "chatbot.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/chatbot",
+      "handler": "chatbot.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

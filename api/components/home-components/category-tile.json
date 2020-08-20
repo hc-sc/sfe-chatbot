@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_home_components_category_tiles",
+  "info": {
+    "name": "CategoryTile",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    },
+    "actions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.action-button"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "sub_pages": {
+      "collection": "sub-page"
+    }
+  }
+}

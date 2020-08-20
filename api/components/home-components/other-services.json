@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_home_components_other_services",
+  "info": {
+    "name": "OtherServices",
+    "icon": "laptop"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "description_en": {
+      "type": "text"
+    },
+    "description_fr": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_subpage_components_grouped_tabs",
+  "info": {
+    "name": "grouped_tabs",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "tabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.tabbed-content"
+    }
+  }
+}

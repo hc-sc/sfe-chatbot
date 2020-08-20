@@ -12,10 +12,29 @@
 
 module.exports = {
   /**
-   * Simple example.
-   * Every monday at 1am.
+   * Every monday at 11pm.
    */
-  // '0 1 * * 1': () => {
-  //
-  // }
+  '0 23 * * 1': () => {
+    console.log( 'cron test' );
+      // TODO: Recalculate software search index when new set is published (monday after hours?)
+      //       Could also do a POST hook on the API...
+      const { GATEWAY_SEARCH_INDEX, SOFTWARE_SEARCH_INDEX } = strapi.elastic.config;
+
+      try {
+        strapi.elastic.client.indices.refresh({ index: GATEWAY_SEARCH_INDEX });
+      }
+      catch( err ) {
+        console.log( err );
+      }
+
+      try {
+        strapi.elastic.client.indices.refresh({ index: SOFTWARE_SEARCH_INDEX });
+      }
+      catch( err ) {
+        console.log( err );
+      }
+  },
+  // '*/1 * * * * *': () => {
+  //   console.log( 'cron test' );
+  // },
 };

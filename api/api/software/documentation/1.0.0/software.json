@@ -516,8 +516,7 @@
     "schemas": {
       "Software": {
         "required": [
-          "id",
-          "name"
+          "id"
         ],
         "properties": {
           "id": {
@@ -536,9 +535,6 @@
             "type": "string"
           },
           "compatibility": {
-            "type": "string"
-          },
-          "context": {
             "type": "string"
           },
           "edition": {
@@ -592,9 +588,6 @@
         }
       },
       "NewSoftware": {
-        "required": [
-          "name"
-        ],
         "properties": {
           "name": {
             "type": "string"
@@ -609,9 +602,6 @@
             "type": "string"
           },
           "compatibility": {
-            "type": "string"
-          },
-          "context": {
             "type": "string"
           },
           "edition": {

@@ -106,7 +106,7 @@
 - Find information about [WebEx](gw_search_query)
 - Search for [account setup](gw_search_query)
 - Search for [keyboard](gw_search_query)
-- Search the gateway for [keyboard](gw_search_query)
+- Search the gateway for [landline](gw_search_query)
 - Can you search for new [account creation](gw_search_query)
 - Search for [hardware](gw_search_query) information
 - Can you do a search for [fax machines](gw_search_query)

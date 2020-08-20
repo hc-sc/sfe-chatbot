@@ -1,0 +1,22 @@
+.gw-splash-out-box {
+  height: 66vh !important;
+  overflow-y: visible;
+
+  .row.mrgn-tp-lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .col-md-6 {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 990px ) {
+    .row.mrgn-tp-lg {
+      display: block;
+    }
+  }
+
+}

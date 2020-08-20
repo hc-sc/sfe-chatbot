@@ -69,13 +69,15 @@ class ActionAcronym(Action):
         else:
           message = "I'm sorry I don't seem to remember what '" + ent + "' stands for. Did you mean one of these: "
 
+          buttons = []
+          
           for match in closeMatches:
             match, _ = match
-            message += match + ", "
+            pld = "What does " + match + " stand for?"
+            btn = { "title": match, "payload": pld }
+            buttons.append( btn )
 
-          message = message[:-2] + "?"
-
-          dispatcher.utter_message( message )
+          dispatcher.utter_message( text=message, buttons=buttons )
 
         # TODO: Log queries that don't match and review to improve nlp model
       else:

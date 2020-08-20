@@ -16,7 +16,7 @@ WORKDIR /usr/src/alfred/
 COPY Makefile ./
 
 # Copy bot
-COPY ./core ./core/
+# COPY ./core ./core/
 
 # Expose ports
 EXPOSE 5005

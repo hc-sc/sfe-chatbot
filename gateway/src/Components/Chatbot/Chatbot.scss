@@ -1,0 +1,62 @@
+.rw-conversation-container {
+  border-radius: 1px;
+  box-shadow: 2px 2px 5px 2px #a3a3a3;
+
+  .rw-header {
+    background-color: #2e7083;
+  }
+
+  .rw-message {
+  
+    .rw-response {
+      background-color: #f1c0a2;
+    }
+  
+    .rw-client {
+      background-color: #2e7083;
+    }
+
+    .rw-response,
+    .rw-client {
+      box-shadow: 2px 2px 5px 2px #a3a3a3;
+    }
+
+    .rw-replies {
+      .rw-reply {
+        border-color: #2e7083;
+        color: #2e7083;
+      }
+    }
+  }
+
+  .rw-sender {
+    .rw-send .rw-send-icon-ready {
+      fill: #2e7083;
+    }
+  }
+
+} 
+
+.rw-launcher {
+  background-color: #2e7083;
+  box-shadow: 0 0 0 rgba(224, 130, 24, 0.5);
+  // TODO: Animate only if new user/message
+  animation: pulse 2s infinite;
+
+  &.rw-hide-sm,
+  &:hover {
+    animation: none;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 rgba(224, 131, 24, 0.5);
+  }
+  75% {
+   box-shadow: 0 0 0 16px rgba(224, 131, 24, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 131, 24, 0);
+  }
+}

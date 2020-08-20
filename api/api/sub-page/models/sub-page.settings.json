@@ -1,0 +1,97 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sub_pages",
+  "info": {
+    "name": "SubPage"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "description_en": {
+      "type": "string"
+    },
+    "description_fr": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    },
+    "parent_page": {
+      "type": "enumeration",
+      "enum": [
+        "software",
+        "hardware",
+        "accounts",
+        "phoneinternet",
+        "conftv",
+        "security",
+        "userguide"
+      ]
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "None",
+        "SoftwareNew",
+        "SoftwareSupport",
+        "SoftwareTransfer",
+        "HardwareGet",
+        "HardwareInstall",
+        "HardwareSupport",
+        "HardwareReturn",
+        "AccountNetwork",
+        "AccountOutlook",
+        "PhoneNew",
+        "PhoneSupport",
+        "PhoneRemove",
+        "PhoneInternetServices",
+        "Conference",
+        "TV",
+        "SecurityIT",
+        "SecurityPhysical"
+      ],
+      "default": "None"
+    },
+    "name": {
+      "type": "string",
+      "regex": "[a-z0-9-]",
+      "required": true,
+      "unique": true,
+      "minLength": 2
+    },
+    "margin_notes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.note"
+    },
+    "tabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.tabbed-content"
+    },
+    "actions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.action-button"
+    },
+    "TabStyle": {
+      "type": "enumeration",
+      "enum": [
+        "tabs",
+        "panels"
+      ],
+      "default": "tabs"
+    }
+  }
+}

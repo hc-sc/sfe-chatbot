@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_subpage_components_action_buttons",
+  "info": {
+    "name": "ActionButton",
+    "icon": "hand-point-right"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "label_en": {
+      "type": "string"
+    },
+    "label_fr": {
+      "type": "string"
+    },
+    "link_en": {
+      "type": "string"
+    },
+    "link_fr": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ],
+      "default": "primary"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    }
+  }
+}

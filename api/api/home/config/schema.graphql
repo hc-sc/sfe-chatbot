@@ -1,0 +1,43 @@
+module.exports = {
+  definition: `type GatewaySearchSourceItemNotes { 
+    header_en: String
+    header_fr: String
+    content_en: String
+    content_fr: String
+  }
+  type GatewaySearchSourceItemTabs { 
+    category: String
+    header_en: String
+    header_fr: String
+    content_en: String
+    content_fr: String
+  }
+  type GatewaySearchSourceItem {
+    name: String
+    parent_page: String
+    category: String
+    header_en: String
+    header_fr: String
+    description_en: String
+    description_fr: String
+    content_en: String
+    content_fr: String
+    tabs: [GatewaySearchSourceItemTabs],
+    margin_notes: [GatewaySearchSourceItemNotes],
+    id: String
+  }
+  type GatewaySearchResult {
+    _source: GatewaySearchSourceItem
+    _id: String!
+    _score: Float!
+  }`,
+  query: `
+    gatewaySearch( query: String = "", locale: String = "" ): [GatewaySearchResult]!
+  `,
+  type: {},
+  resolver: {
+    Query: {
+        gatewaySearch: strapi.controllers.home.gatewaySearch
+    },
+  },
+};

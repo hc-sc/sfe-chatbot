@@ -1,0 +1,17 @@
+module.exports = {
+  definition: `type SoftwareSearchResult {
+    _source: Software
+    _id: String
+    _score: Float!
+
+  }`,
+  query: `
+    softwareSearch( query: String = "", locale: String = "", all: Boolean = false ): [SoftwareSearchResult]!
+  `,
+  type: {},
+  resolver: {
+    Query: {
+        softwareSearch: strapi.controllers.software.softwareSearch
+    },
+  },
+};

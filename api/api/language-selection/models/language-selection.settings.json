@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "language_selections",
+  "info": {
+    "name": "LanguageSelection"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "banner": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

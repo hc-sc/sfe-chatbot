@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_interruptions",
+  "info": {
+    "name": "Service Interruptions"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "planned": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "name_en": {
+      "type": "string"
+    },
+    "name_fr": {
+      "type": "string"
+    },
+    "details_en": {
+      "type": "text"
+    },
+    "details_fr": {
+      "type": "text"
+    },
+    "start": {
+      "type": "datetime"
+    },
+    "end": {
+      "type": "datetime"
+    }
+  }
+}

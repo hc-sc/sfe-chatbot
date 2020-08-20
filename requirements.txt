@@ -1,0 +1,6 @@
+python-Levenshtein==0.12.0
+fuzzywuzzy==0.18.0
+gql==3.0.0a1
+pandas==1.1.0
+python-benedict==0.18.1
+rasa==1.10.10

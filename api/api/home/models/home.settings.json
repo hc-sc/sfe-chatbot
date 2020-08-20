@@ -26,11 +26,6 @@
     "subtitle_fr": {
       "type": "string"
     },
-    "MostRequestedServices": {
-      "type": "component",
-      "repeatable": true,
-      "component": "home-components.most-requested-services"
-    },
     "logo": {
       "model": "file",
       "via": "related",
@@ -48,6 +43,14 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "MostRequestedPages": {
+      "collection": "sub-page"
+    },
+    "OtherServices": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home-components.other-services"
     }
   }
 }

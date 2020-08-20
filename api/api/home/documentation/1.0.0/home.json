@@ -329,16 +329,15 @@
             "items": {
               "type": "object",
               "required": [
-                "id"
+                "id",
+                "header_en",
+                "header_fr"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "header_en": {
-                  "type": "string"
-                },
-                "description_en": {
                   "type": "string"
                 },
                 "path": {
@@ -408,7 +407,66 @@
                 "header_fr": {
                   "type": "string"
                 },
-                "description_fr": {
+                "header_short_en": {
+                  "type": "string"
+                },
+                "header_short_fr": {
+                  "type": "string"
+                },
+                "sub_pages": {
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "header_en": {
+                      "type": "string"
+                    },
+                    "header_fr": {
+                      "type": "string"
+                    },
+                    "description_en": {
+                      "type": "string"
+                    },
+                    "description_fr": {
+                      "type": "string"
+                    },
+                    "content_en": {
+                      "type": "string"
+                    },
+                    "content_fr": {
+                      "type": "string"
+                    },
+                    "parent_page": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "margin_notes": {
+                      "type": "component"
+                    },
+                    "tabs": {
+                      "type": "component"
+                    },
+                    "actions": {
+                      "type": "component"
+                    },
+                    "TabStyle": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "content_en": {
+                  "type": "string"
+                },
+                "content_fr": {
                   "type": "string"
                 }
               }
@@ -419,29 +477,6 @@
           },
           "subtitle_fr": {
             "type": "string"
-          },
-          "MostRequestedServices": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name_en": {
-                  "type": "string"
-                },
-                "name_fr": {
-                  "type": "string"
-                },
-                "path": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "logo": {
             "required": [
@@ -564,6 +599,85 @@
                 "type": "string"
               }
             }
+          },
+          "MostRequestedPages": {
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "header_en": {
+                "type": "string"
+              },
+              "header_fr": {
+                "type": "string"
+              },
+              "description_en": {
+                "type": "string"
+              },
+              "description_fr": {
+                "type": "string"
+              },
+              "content_en": {
+                "type": "string"
+              },
+              "content_fr": {
+                "type": "string"
+              },
+              "parent_page": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "margin_notes": {
+                "type": "component"
+              },
+              "tabs": {
+                "type": "component"
+              },
+              "actions": {
+                "type": "component"
+              },
+              "TabStyle": {
+                "type": "string"
+              }
+            }
+          },
+          "OtherServices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "header_en": {
+                  "type": "string"
+                },
+                "header_fr": {
+                  "type": "string"
+                },
+                "description_en": {
+                  "type": "string"
+                },
+                "description_fr": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -580,16 +694,15 @@
             "items": {
               "type": "object",
               "required": [
-                "id"
+                "id",
+                "header_en",
+                "header_fr"
               ],
               "properties": {
                 "id": {
                   "type": "string"
                 },
                 "header_en": {
-                  "type": "string"
-                },
-                "description_en": {
                   "type": "string"
                 },
                 "path": {
@@ -659,7 +772,66 @@
                 "header_fr": {
                   "type": "string"
                 },
-                "description_fr": {
+                "header_short_en": {
+                  "type": "string"
+                },
+                "header_short_fr": {
+                  "type": "string"
+                },
+                "sub_pages": {
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "header_en": {
+                      "type": "string"
+                    },
+                    "header_fr": {
+                      "type": "string"
+                    },
+                    "description_en": {
+                      "type": "string"
+                    },
+                    "description_fr": {
+                      "type": "string"
+                    },
+                    "content_en": {
+                      "type": "string"
+                    },
+                    "content_fr": {
+                      "type": "string"
+                    },
+                    "parent_page": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "margin_notes": {
+                      "type": "component"
+                    },
+                    "tabs": {
+                      "type": "component"
+                    },
+                    "actions": {
+                      "type": "component"
+                    },
+                    "TabStyle": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "content_en": {
+                  "type": "string"
+                },
+                "content_fr": {
                   "type": "string"
                 }
               }
@@ -671,7 +843,10 @@
           "subtitle_fr": {
             "type": "string"
           },
-          "MostRequestedServices": {
+          "MostRequestedPages": {
+            "type": "string"
+          },
+          "OtherServices": {
             "type": "array",
             "items": {
               "type": "object",
@@ -682,13 +857,19 @@
                 "id": {
                   "type": "string"
                 },
-                "name_en": {
+                "name": {
                   "type": "string"
                 },
-                "name_fr": {
+                "header_en": {
                   "type": "string"
                 },
-                "path": {
+                "header_fr": {
+                  "type": "string"
+                },
+                "description_en": {
+                  "type": "string"
+                },
+                "description_fr": {
                   "type": "string"
                 }
               }

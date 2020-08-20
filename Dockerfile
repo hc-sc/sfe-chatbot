@@ -2,8 +2,10 @@
 # Use python 3.7 image as foundation
 FROM python:3.7
 
+COPY ./requirements.txt requirements.txt
+
 # Install dependencies
-RUN pip3 install rasa fuzzywuzzy pandas python-benedict requests
+RUN pip3 install -r requirements.txt
 
 # Download spacy libs (TODO: comment out/skip if not using spacy)
 # RUN make spacy-link

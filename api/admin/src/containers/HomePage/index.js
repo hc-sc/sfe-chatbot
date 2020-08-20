@@ -14,20 +14,6 @@ import useFetch from './hooks';
 import { ALink, Block, Container, LinkWrapper, P, Wave, Separator } from './components';
 import BlogPost from './BlogPost';
 
-const FIRST_BLOCK_LINKS = [
-  {
-    link:
-      'https://strapi.io/documentation/v3.x/getting-started/quick-start.html#_4-create-a-category-content-type',
-    contentId: 'app.components.BlockLink.documentation.content',
-    titleId: 'app.components.BlockLink.documentation',
-  },
-  {
-    link: 'https://github.com/strapi/foodadvisor',
-    contentId: 'app.components.BlockLink.code.content',
-    titleId: 'app.components.BlockLink.code',
-  },
-];
-
 const HomePage = ({ global: { plugins }, history: { push } }) => {
   const { error, isLoading, posts } = useFetch();
   const handleClick = e => {
@@ -108,82 +94,20 @@ const HomePage = ({ global: { plugins }, history: { push } }) => {
                   }}
                 </FormattedMessage>
               )}
-              {hasAlreadyCreatedContentTypes && (
-                <div style={{ marginTop: isLoading ? 60 : 50 }}>
-                  {posts.map((post, index) => (
-                    <BlogPost
-                      {...post}
-                      key={post.link}
-                      isFirst={index === 0}
-                      isLoading={isLoading}
-                      error={error}
-                    />
-                  ))}
-                </div>
-              )}
-              <FormattedMessage id={linkProps.id}>
-                {msg => (
-                  <ALink
-                    rel="noopener noreferrer"
-                    {...linkProps}
-                    style={{ verticalAlign: ' bottom', marginBottom: 5 }}
-                  >
-                    {msg}
-                  </ALink>
-                )}
-              </FormattedMessage>
               <Separator style={{ marginTop: 37, marginBottom: 36 }} />
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                {FIRST_BLOCK_LINKS.map((data, index) => {
-                  const type = index === 0 ? 'doc' : 'code';
-
-                  return (
-                    <LinkWrapper href={data.link} target="_blank" key={data.link} type={type}>
-                      <FormattedMessage id={data.titleId}>
-                        {title => <p className="bold">{title}</p>}
-                      </FormattedMessage>
-                      <FormattedMessage id={data.contentId}>
-                        {content => <p>{content}</p>}
-                      </FormattedMessage>
-                    </LinkWrapper>
-                  );
-                })}
+                
               </div>
             </Block>
           </div>
 
-          <div className="col-md-12 col-lg-4">
+          {/* <div className="col-md-12 col-lg-4">
             <Block style={{ paddingRight: 30, paddingBottom: 0 }}>
-              <FormattedMessage id="HomePage.community">{msg => <h2>{msg}</h2>}</FormattedMessage>
-              <FormattedMessage id="app.components.HomePage.community.content">
-                {content => <P style={{ marginTop: 7, marginBottom: 0 }}>{content}</P>}
-              </FormattedMessage>
-              <FormattedMessage id="HomePage.roadmap">
-                {msg => (
-                  <ALink
-                    rel="noopener noreferrer"
-                    href="https://portal.productboard.com/strapi/1-public-roadmap/tabs/2-under-consideration"
-                    target="_blank"
-                  >
-                    {msg}
-                  </ALink>
-                )}
-              </FormattedMessage>
-
+              <FormattedMessage id="HomePage.community">{msg => <h2>{ msg }</h2>}</FormattedMessage>
               <Separator style={{ marginTop: 18 }} />
-              <div
-                className="row social-wrapper"
-                style={{
-                  display: 'flex',
-                  margin: 0,
-                  marginTop: 36,
-                  marginLeft: -15,
-                }}
-              >
-                {/* TODO: Put something else here? */}
-              </div>
+              
             </Block>
-          </div>
+          </div> */}
         </div>
       </Container>
     </>

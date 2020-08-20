@@ -1,23 +1,23 @@
-import re, json
+import re, json, sys
 # from rasa_core_sdk import Action
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from typing import Any, Text, Dict, List
-import requests
-import urllib.parse
+from gql import gql, Client, AIOHTTPTransport
+from urllib.parse import quote
 
 """
   @ActionGatewaySearch
 
   Rasa action class for handling gateway page searching
-
-  REQUIRES NODEJS V10+
+  
 """
+
 class ActionGatewaySearch(Action):
   def name(self) -> Text:
     return "action_gateway_search"
 
-  def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+  async def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
     if not tracker.latest_message['entities']:
       # no acronym was found in the latest user intent
       dispatcher.utter_message("I couldn't find a search term in '" + tracker.latest_message["text"] + "'. I'm am still a work in progress :)")
@@ -29,47 +29,64 @@ class ActionGatewaySearch(Action):
     searchTerm = tracker.latest_message['entities'][0]['value']
     query = re.sub( r'[^\w\s]', '', searchTerm )
 
-    # TODO: Currently uses search api from old gateway - transition to new?
-    response = requests.get( "http://sfe-chatbot-gateway:3000/api/search/gateway/" + urllib.parse.quote( query ) )
+    transport = AIOHTTPTransport(url="http://sfe-chatbot-gateway-api:1337/graphql")
+  
+    async with Client(transport=transport, fetch_schema_from_transport=True) as session:
+      gqlQuery = gql(
+        """
+          query getSearchResults($query: String, $locale: String) {
+            gatewaySearch(query: $query, locale: $locale) {
+              _id
+              _score
+              _source {
+                name
+                parent_page
+                header_en
+                description_en
+              }
+            }
+          }
+        """
+      )
 
-    # Parse JSON response
-    results = json.loads( response.content )
+      params = { "query": query, "locale": "en" }
 
-    if "error" in results:
-      # Error found in response - apologize to the user and cancel search.
-      dispatcher.utter_template( "utter_error_generic" )
-      print( json.dumps( results, indent=2 ) )
-      return []
+      results = await session.execute( gqlQuery, variable_values=params )
 
-    # print( json.dumps( results, indent=4, sort_keys=True ) )
+      # print( results )
+      # sys.stdout.flush()      
 
-    resultsCount = len( results["results"] )
+      results = results[ "gatewaySearch" ]
+      resultsCount = len( results )
 
-    response = None
-    
-    if resultsCount > 0:
-        # TODO: Bilingual
-      response = "I found " + str( resultsCount ) + " result" + ( "s" if resultsCount > 1 else "" ) + " for \"" + searchTerm + "\". Were you looking for: "
-      buttons = []
+      response = None
 
-      maxResults = 5
-      resultsCount = 0
+      if resultsCount > 0:
+          # TODO: Bilingual
+        response = "I found " + str( resultsCount ) + " result" + ( "s" if resultsCount > 1 else "" ) + " for \"" + searchTerm + "\". Were you looking for:"
 
-      # TODO: Respond with top 2 results and offer link to full results page.
-      for result in results["results"]:
-        btn = { "type": "web_url", "title": result["title"], "url": result["url"] }
-        buttons.append( btn )
-        resultsCount += 1
-        if resultsCount >= maxResults:
-          break
-      
-      # FIXME: Button response broken from 0.X-1.X migration
-      dispatcher.utter_button_message( response, buttons=button )
-      
-      return []
-    else:
-      # response = "Hmm, I couldn't seem to find anything on the gateway related to \"" + query + "\"."
-      
-      dispatcher.utter_template( "utter_search_results_none", gw_search_query = query )
+        maxResults = 2
+        resultsCount = 0
 
-      return []
+        for result in results:
+          path = "/en/" + ( result[ "_source" ][ "parent_page" ] + "/" if result[ "_source" ][ "parent_page" ] is not None else "" ) + result[ "_source" ][ "name" ]
+          response += "\n\n[" + result[ "_source" ][ "header_en" ] + "](" + path + ")"
+          resultsCount += 1
+          
+          if resultsCount >= maxResults:
+            more = "/en/search/" + quote( searchTerm )
+            response += "\n\n[More...](" + more + ")"
+            break
+
+        # print( response )
+        # sys.stdout.flush()
+        
+        dispatcher.utter_message( text=response )
+        
+        return []
+      else:
+        response = "Hmm, I couldn't seem to find anything on the gateway related to \"" + query + "\"."
+        
+      dispatcher.utter_message( template="utter_search_results_none", gw_search_query=query, tracker=tracker )
+
+    return []

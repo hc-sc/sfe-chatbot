@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "chatbots",
+  "info": {
+    "name": "Chatbot"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_fr": {
+      "type": "string"
+    },
+    "subtitle_en": {
+      "type": "string"
+    },
+    "subtitle_fr": {
+      "type": "string"
+    },
+    "input_hint_en": {
+      "type": "string"
+    },
+    "input_hint_fr": {
+      "type": "string"
+    }
+  }
+}

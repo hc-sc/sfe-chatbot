@@ -7,10 +7,10 @@ WORKDIR /usr/src/alfred/
 COPY Makefile ./
 
 # Copy bot
-RUN mkdir /usr/src/alfred/data
-COPY ./data/acronyms.csv /usr/src/alfred/data/
-COPY ./data/gedsOpenData.csv ./data/
-COPY ./actions /usr/src/alfred/actions
+# RUN mkdir /usr/src/alfred/data
+# COPY ./data/acronyms.csv /usr/src/alfred/data/
+# COPY ./data/gedsOpenData.csv ./data/
+# COPY ./actions /usr/src/alfred/actions
 
 # Expose ports
 EXPOSE 5055

@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_subpage_components_tabbed_contents",
+  "info": {
+    "name": "TabbedContent",
+    "icon": "folder"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Unassigned",
+        "Business",
+        "Support",
+        "Management"
+      ],
+      "default": "Unassigned"
+    },
+    "is_searched_independently": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "actions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.action-button"
+    },
+    "notes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "subpage-components.note"
+    }
+  }
+}

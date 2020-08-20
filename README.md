@@ -8,10 +8,14 @@ This project is a chatbot, based on the rasa stack, meant to serve as a prototyp
 
 ### Running
 
+Requires Docker, docker-compose.
+
 See: [Makefile](./Makefile)
 
-### TODO
+### TODO:
 
+- Bilingual chatbot
+  - Language detector, multiple agents? Gateway structure would suggest multiple agents.
 - Write readme
 - Tests
 - Jenkins pipeline

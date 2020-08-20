@@ -7,10 +7,9 @@
   "options": {},
   "attributes": {
     "header_en": {
-      "type": "string"
-    },
-    "description_en": {
-      "type": "text"
+      "type": "string",
+      "private": false,
+      "required": true
     },
     "path": {
       "type": "string"
@@ -25,10 +24,23 @@
       "required": false
     },
     "header_fr": {
+      "type": "string",
+      "required": true
+    },
+    "header_short_en": {
       "type": "string"
     },
-    "description_fr": {
-      "type": "text"
+    "header_short_fr": {
+      "type": "string"
+    },
+    "sub_pages": {
+      "collection": "sub-page"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
     }
   }
 }

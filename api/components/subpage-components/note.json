@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_subpage_components_notes",
+  "info": {
+    "name": "MarginNote",
+    "icon": "align-right"
+  },
+  "options": {},
+  "attributes": {
+    "header_en": {
+      "type": "string"
+    },
+    "header_fr": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "list",
+        "none"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "content_en": {
+      "type": "richtext"
+    },
+    "content_fr": {
+      "type": "richtext"
+    }
+  }
+}
