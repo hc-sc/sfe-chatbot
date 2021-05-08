@@ -9427,7 +9427,7 @@ strapi-utils@3.0.5:
     shelljs "^0.8.3"
     yup "0.28.1"
 
-strapi@^3.0.5:
+strapi@3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/strapi/-/strapi-3.0.5.tgz#c94f1a3ce9725dce6dc4bde2f4e30f950326f59a"
   integrity sha512-F5T0uT4KlIOs4Z1nNaiKpuSgtIHBOtbHCRFnc2AY9zZWT7Wfa1onfY/54d4irsiyQpVqzHz02gIL7kKF2xLUUw==
@@ -9966,9 +9966,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 ua-parser-js@^0.7.18:
-  version "0.7.21"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
-  integrity sha512-+O8/qh/Qj8CgC6eYBVBykMrNtp5Gebn4dlGD/kKXVkJNDwyrAwSIqwz8CDf+tsAIWVycKcku6gIXJ0qwx/ZXaQ==
+  version "0.7.28"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
+  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
 
 uglify-js@3.4.x:
   version "3.4.10"
